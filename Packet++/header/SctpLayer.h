@@ -1477,8 +1477,9 @@ namespace pcpp
 		/// @return True if chunk was added successfully
 		/// @note RFC 9260 states that PPID byte order conversion is the upper layer's responsibility.
 		/// For API consistency, this method converts PPID from host to network byte order.
-		bool addDataChunk(uint32_t tsn, uint16_t streamId, uint16_t streamSeq, uint32_t ppid, const uint8_t* userData,
-		                  size_t userDataLen, bool beginFragment = true, bool endFragment = true,
+		bool addDataChunk(uint32_t tsn, uint16_t streamId, uint16_t streamSeq, uint32_t ppid,
+		                  const uint8_t* userData, size_t userDataLen,
+		                  bool beginFragment = true, bool endFragment = true,
 		                  bool unordered = false, bool immediate = false);
 
 		/// Add an INIT chunk to the SCTP packet
@@ -1490,8 +1491,10 @@ namespace pcpp
 		/// @param[in] parameters Optional parameters data (can be nullptr)
 		/// @param[in] parametersLen Length of parameters data
 		/// @return True if chunk was added successfully
-		bool addInitChunk(uint32_t initiateTag, uint32_t arwnd, uint16_t numOutboundStreams, uint16_t numInboundStreams,
-		                  uint32_t initialTsn, const uint8_t* parameters = nullptr, size_t parametersLen = 0);
+		bool addInitChunk(uint32_t initiateTag, uint32_t arwnd,
+		                  uint16_t numOutboundStreams, uint16_t numInboundStreams,
+		                  uint32_t initialTsn,
+		                  const uint8_t* parameters = nullptr, size_t parametersLen = 0);
 
 		/// Add an INIT-ACK chunk to the SCTP packet
 		/// @param[in] initiateTag Initiate Tag
@@ -1502,9 +1505,10 @@ namespace pcpp
 		/// @param[in] parameters Optional parameters data (can be nullptr)
 		/// @param[in] parametersLen Length of parameters data
 		/// @return True if chunk was added successfully
-		bool addInitAckChunk(uint32_t initiateTag, uint32_t arwnd, uint16_t numOutboundStreams,
-		                     uint16_t numInboundStreams, uint32_t initialTsn, const uint8_t* parameters = nullptr,
-		                     size_t parametersLen = 0);
+		bool addInitAckChunk(uint32_t initiateTag, uint32_t arwnd,
+		                     uint16_t numOutboundStreams, uint16_t numInboundStreams,
+		                     uint32_t initialTsn,
+		                     const uint8_t* parameters = nullptr, size_t parametersLen = 0);
 
 		/// Add a SACK chunk to the SCTP packet
 		/// @param[in] cumulativeTsnAck Cumulative TSN Ack
@@ -1527,7 +1531,8 @@ namespace pcpp
 		bool addNrSackChunk(uint32_t cumulativeTsnAck, uint32_t arwnd,
 		                    const std::vector<sctp_gap_ack_block>& gapBlocks = {},
 		                    const std::vector<sctp_gap_ack_block>& nrGapBlocks = {},
-		                    const std::vector<uint32_t>& dupTsns = {}, bool allNonRenegable = false);
+		                    const std::vector<uint32_t>& dupTsns = {},
+		                    bool allNonRenegable = false);
 
 		/// Add a HEARTBEAT chunk to the SCTP packet
 		/// @param[in] heartbeatInfo Pointer to heartbeat info data
@@ -1592,7 +1597,8 @@ namespace pcpp
 		/// @param[in] newCumulativeTsn New Cumulative TSN
 		/// @param[in] streams Vector of stream/sequence pairs to skip
 		/// @return True if chunk was added successfully
-		bool addForwardTsnChunk(uint32_t newCumulativeTsn, const std::vector<sctp_forward_tsn_stream>& streams = {});
+		bool addForwardTsnChunk(uint32_t newCumulativeTsn,
+		                        const std::vector<sctp_forward_tsn_stream>& streams = {});
 
 		/// Add an I-DATA chunk to the SCTP packet (RFC 8260)
 		/// @param[in] tsn Transmission Sequence Number
@@ -1606,15 +1612,17 @@ namespace pcpp
 		/// @param[in] unordered True for unordered delivery (U bit)
 		/// @param[in] immediate True for immediate bit (I bit)
 		/// @return True if chunk was added successfully
-		bool addIDataChunk(uint32_t tsn, uint16_t streamId, uint32_t mid, uint32_t ppidOrFsn, const uint8_t* userData,
-		                   size_t userDataLen, bool beginFragment = true, bool endFragment = true,
+		bool addIDataChunk(uint32_t tsn, uint16_t streamId, uint32_t mid, uint32_t ppidOrFsn,
+		                   const uint8_t* userData, size_t userDataLen,
+		                   bool beginFragment = true, bool endFragment = true,
 		                   bool unordered = false, bool immediate = false);
 
 		/// Add an I-FORWARD-TSN chunk to the SCTP packet (RFC 8260)
 		/// @param[in] newCumulativeTsn New Cumulative TSN
 		/// @param[in] streams Vector of stream/MID tuples to skip
 		/// @return True if chunk was added successfully
-		bool addIForwardTsnChunk(uint32_t newCumulativeTsn, const std::vector<sctp_iforward_tsn_stream>& streams = {});
+		bool addIForwardTsnChunk(uint32_t newCumulativeTsn,
+		                         const std::vector<sctp_iforward_tsn_stream>& streams = {});
 
 		/// Add a PAD chunk to the SCTP packet (RFC 4820)
 		/// @param[in] paddingLen Length of padding data (will be filled with zeros)
@@ -2259,7 +2267,8 @@ namespace pcpp
 	/// @param[in] dataLen Length of data
 	/// @param[out] hmacOut Output buffer for HMAC (must be at least 20 bytes)
 	/// @return True if HMAC was calculated successfully
-	bool calculateSctpHmacSha1(const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
+	bool calculateSctpHmacSha1(const uint8_t* key, size_t keyLen,
+	                           const uint8_t* data, size_t dataLen,
 	                           uint8_t* hmacOut);
 
 	/// Calculate HMAC-SHA256 for SCTP AUTH chunk
@@ -2269,7 +2278,8 @@ namespace pcpp
 	/// @param[in] dataLen Length of data
 	/// @param[out] hmacOut Output buffer for HMAC (must be at least 32 bytes)
 	/// @return True if HMAC was calculated successfully
-	bool calculateSctpHmacSha256(const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
+	bool calculateSctpHmacSha256(const uint8_t* key, size_t keyLen,
+	                             const uint8_t* data, size_t dataLen,
 	                             uint8_t* hmacOut);
 
 	/// Verify HMAC for SCTP AUTH chunk
@@ -2281,7 +2291,8 @@ namespace pcpp
 	/// @param[in] expectedHmac Pointer to expected HMAC value
 	/// @param[in] expectedHmacLen Length of expected HMAC
 	/// @return True if HMAC matches expected value
-	bool verifySctpHmac(uint16_t hmacId, const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
+	bool verifySctpHmac(uint16_t hmacId, const uint8_t* key, size_t keyLen,
+	                    const uint8_t* data, size_t dataLen,
 	                    const uint8_t* expectedHmac, size_t expectedHmacLen);
 
 	/// Compute HMAC for SCTP AUTH chunk per RFC 4895
@@ -2297,8 +2308,8 @@ namespace pcpp
 	/// @return True if HMAC was computed successfully, false if no AUTH chunk or invalid parameters
 	/// @note Per RFC 4895, the HMAC is computed over the AUTH chunk with its HMAC field set to zero,
 	/// followed by all chunks placed after the AUTH chunk in the SCTP packet.
-	bool computeSctpAuthHmac(const SctpLayer& sctpLayer, const uint8_t* key, size_t keyLen, uint8_t* hmacOut,
-	                         size_t* hmacOutLen);
+	bool computeSctpAuthHmac(const SctpLayer& sctpLayer, const uint8_t* key, size_t keyLen,
+	                         uint8_t* hmacOut, size_t* hmacOutLen);
 
 	/// Verify AUTH chunk HMAC in an SCTP packet per RFC 4895
 	/// This is a convenience function that:
@@ -2351,7 +2362,8 @@ namespace pcpp
 	inline bool shouldReportUnrecognizedChunk(uint8_t chunkType)
 	{
 		uint8_t action = chunkType & SctpChunkActionBits::ACTION_MASK;
-		return action == SctpChunkActionBits::STOP_AND_REPORT || action == SctpChunkActionBits::SKIP_AND_REPORT;
+		return action == SctpChunkActionBits::STOP_AND_REPORT ||
+		       action == SctpChunkActionBits::SKIP_AND_REPORT;
 	}
 
 	// ==================== Parameter Action Bits (RFC 9260) ====================
@@ -2394,7 +2406,8 @@ namespace pcpp
 	inline bool shouldReportUnrecognizedParam(uint16_t paramType)
 	{
 		uint16_t action = paramType & SctpParamActionBits::ACTION_MASK;
-		return action == SctpParamActionBits::STOP_AND_REPORT || action == SctpParamActionBits::SKIP_AND_REPORT;
+		return action == SctpParamActionBits::STOP_AND_REPORT ||
+		       action == SctpParamActionBits::SKIP_AND_REPORT;
 	}
 
 }  // namespace pcpp
