@@ -1125,217 +1125,6 @@ namespace pcpp
 			return *reinterpret_cast<const T*>(getValue() + offset);
 		}
 
-		// ==================== DATA Chunk Methods ====================
-
-		/// @return TSN value (for DATA/I-DATA chunks)
-		uint32_t getDataTsn() const;
-
-		/// @return Stream Identifier (for DATA/I-DATA chunks)
-		uint16_t getDataStreamId() const;
-
-		/// @return Stream Sequence Number (for DATA chunks)
-		uint16_t getDataStreamSequenceNumber() const;
-
-		/// @return Payload Protocol Identifier (for DATA chunks, or I-DATA when B=1)
-		/// @note RFC 9260 states that SCTP implementations should not perform byte order conversion
-		/// on PPID as it's the upper layer's responsibility. However, for API consistency, this library
-		/// converts PPID from network to host byte order. Use getValueAs<uint32_t>(12) for raw access.
-		uint32_t getDataPayloadProtocolId() const;
-
-		/// @return Pointer to user data (for DATA/I-DATA chunks)
-		uint8_t* getDataUserData() const;
-
-		/// @return User data length (for DATA/I-DATA chunks)
-		size_t getDataUserDataLength() const;
-
-		/// @return True if this is the beginning fragment (B bit set)
-		bool isDataBeginFragment() const;
-
-		/// @return True if this is the ending fragment (E bit set)
-		bool isDataEndFragment() const;
-
-		/// @return True if unordered delivery (U bit set)
-		bool isDataUnordered() const;
-
-		/// @return True if immediate bit is set (I bit, RFC 7053)
-		bool isDataImmediate() const;
-
-		// ==================== INIT/INIT-ACK Chunk Methods ====================
-
-		/// @return Initiate Tag (for INIT/INIT-ACK chunks)
-		uint32_t getInitInitiateTag() const;
-
-		/// @return Advertised Receiver Window Credit (for INIT/INIT-ACK/SACK chunks)
-		uint32_t getInitArwnd() const;
-
-		/// @return Number of Outbound Streams (for INIT/INIT-ACK chunks)
-		uint16_t getInitNumOutboundStreams() const;
-
-		/// @return Number of Inbound Streams (for INIT/INIT-ACK chunks)
-		uint16_t getInitNumInboundStreams() const;
-
-		/// @return Initial TSN (for INIT/INIT-ACK chunks)
-		uint32_t getInitInitialTsn() const;
-
-		/// @return Pointer to first parameter in INIT/INIT-ACK chunk, or nullptr if none
-		uint8_t* getInitFirstParameter() const;
-
-		/// @return Size of parameters section in INIT/INIT-ACK chunk
-		size_t getInitParametersLength() const;
-
-		// ==================== SACK Chunk Methods ====================
-
-		/// @return Cumulative TSN Ack (for SACK/SHUTDOWN chunks)
-		uint32_t getSackCumulativeTsnAck() const;
-
-		/// @return Advertised Receiver Window Credit (for SACK chunks)
-		uint32_t getSackArwnd() const;
-
-		/// @return Number of Gap Ack Blocks (for SACK chunks)
-		uint16_t getSackNumGapBlocks() const;
-
-		/// @return Number of Duplicate TSNs (for SACK chunks)
-		uint16_t getSackNumDupTsns() const;
-
-		/// Get Gap Ack Blocks (for SACK chunks)
-		/// @return Vector of gap ack blocks
-		std::vector<sctp_gap_ack_block> getSackGapBlocks() const;
-
-		/// Get Duplicate TSNs (for SACK chunks)
-		/// @return Vector of duplicate TSNs
-		std::vector<uint32_t> getSackDupTsns() const;
-
-		// ==================== NR-SACK Chunk Methods ====================
-
-		/// @return Cumulative TSN Ack (for NR-SACK chunks)
-		uint32_t getNrSackCumulativeTsnAck() const;
-
-		/// @return Advertised Receiver Window Credit (for NR-SACK chunks)
-		uint32_t getNrSackArwnd() const;
-
-		/// @return Number of Gap Ack Blocks (for NR-SACK chunks)
-		uint16_t getNrSackNumGapBlocks() const;
-
-		/// @return Number of NR (Non-Renegable) Gap Ack Blocks (for NR-SACK chunks)
-		uint16_t getNrSackNumNrGapBlocks() const;
-
-		/// @return Number of Duplicate TSNs (for NR-SACK chunks)
-		uint16_t getNrSackNumDupTsns() const;
-
-		/// @return True if A bit is set (all out-of-order blocks are non-renegable)
-		bool isNrSackAllNonRenegable() const;
-
-		/// Get Gap Ack Blocks (for NR-SACK chunks)
-		/// @return Vector of gap ack blocks
-		std::vector<sctp_gap_ack_block> getNrSackGapBlocks() const;
-
-		/// Get NR (Non-Renegable) Gap Ack Blocks (for NR-SACK chunks)
-		/// @return Vector of NR gap ack blocks
-		std::vector<sctp_gap_ack_block> getNrSackNrGapBlocks() const;
-
-		/// Get Duplicate TSNs (for NR-SACK chunks)
-		/// @return Vector of duplicate TSNs
-		std::vector<uint32_t> getNrSackDupTsns() const;
-
-		// ==================== SHUTDOWN Chunk Methods ====================
-
-		/// @return Cumulative TSN Ack (for SHUTDOWN chunks)
-		uint32_t getShutdownCumulativeTsnAck() const;
-
-		// ==================== HEARTBEAT Chunk Methods ====================
-
-		/// @return Pointer to Heartbeat Info data (for HEARTBEAT/HEARTBEAT-ACK chunks)
-		uint8_t* getHeartbeatInfo() const;
-
-		/// @return Size of Heartbeat Info data (for HEARTBEAT/HEARTBEAT-ACK chunks)
-		size_t getHeartbeatInfoLength() const;
-
-		// ==================== COOKIE-ECHO Chunk Methods ====================
-
-		/// @return Pointer to cookie data (for COOKIE-ECHO chunks)
-		uint8_t* getCookieEchoData() const;
-
-		/// @return Size of cookie data (for COOKIE-ECHO chunks)
-		size_t getCookieEchoLength() const;
-
-		// ==================== ABORT Chunk Methods ====================
-
-		/// @return True if T bit is set (for ABORT/SHUTDOWN-COMPLETE chunks)
-		/// When T bit is set, the Verification Tag is reflected
-		bool isAbortTBitSet() const;
-
-		/// @return Pointer to first error cause in ABORT chunk, or nullptr if none
-		uint8_t* getAbortFirstErrorCause() const;
-
-		/// @return Size of error causes section in ABORT chunk
-		size_t getAbortErrorCausesLength() const;
-
-		// ==================== ERROR Chunk Methods ====================
-
-		/// @return Pointer to first error cause in ERROR chunk, or nullptr if none
-		uint8_t* getErrorFirstCause() const;
-
-		/// @return Size of error causes section in ERROR chunk
-		size_t getErrorCausesLength() const;
-
-		// ==================== ECNE/CWR Chunk Methods ====================
-
-		/// @return Lowest TSN Number (for ECNE chunks)
-		uint32_t getEcneLowestTsn() const;
-
-		/// @return Lowest TSN Number (for CWR chunks)
-		uint32_t getCwrLowestTsn() const;
-
-		// ==================== AUTH Chunk Methods ====================
-
-		/// @return Shared Key Identifier (for AUTH chunks)
-		uint16_t getAuthSharedKeyId() const;
-
-		/// @return HMAC Identifier (for AUTH chunks)
-		uint16_t getAuthHmacId() const;
-
-		/// @return Pointer to HMAC data (for AUTH chunks)
-		uint8_t* getAuthHmacData() const;
-
-		/// @return Size of HMAC data (for AUTH chunks)
-		size_t getAuthHmacLength() const;
-
-		// ==================== FORWARD-TSN Chunk Methods ====================
-
-		/// @return New Cumulative TSN (for FORWARD-TSN chunks)
-		uint32_t getForwardTsnNewCumulativeTsn() const;
-
-		/// Get the number of stream/sequence pairs in FORWARD-TSN chunk
-		/// @return Number of stream entries
-		size_t getForwardTsnStreamCount() const;
-
-		/// Get stream/sequence pairs from FORWARD-TSN chunk (RFC 3758)
-		/// @return Vector of stream/sequence pairs with host byte order values
-		std::vector<sctp_forward_tsn_stream> getForwardTsnStreams() const;
-
-		// ==================== ASCONF/ASCONF-ACK Chunk Methods ====================
-
-		/// @return Serial Number (for ASCONF/ASCONF-ACK chunks)
-		uint32_t getAsconfSerialNumber() const;
-
-		// ==================== I-DATA Chunk Methods ====================
-
-		/// @return Message Identifier (for I-DATA chunks)
-		uint32_t getIDataMessageId() const;
-
-		/// @return PPID or FSN depending on B bit (for I-DATA chunks)
-		uint32_t getIDataPpidOrFsn() const;
-
-		// ==================== I-FORWARD-TSN Chunk Methods ====================
-
-		/// Get the number of stream/MID tuples in I-FORWARD-TSN chunk
-		/// @return Number of stream entries
-		size_t getIForwardTsnStreamCount() const;
-
-		/// Get stream/MID tuples from I-FORWARD-TSN chunk (RFC 8260)
-		/// @return Vector of stream/MID tuples with host byte order values
-		std::vector<sctp_iforward_tsn_stream> getIForwardTsnStreams() const;
-
 		// ==================== Utility Methods ====================
 
 		/// Check if a flag bit is set
@@ -1349,6 +1138,1234 @@ namespace pcpp
 
 	private:
 		sctp_chunk_hdr* m_Data;
+	};
+
+	// ==================== Chunk View Classes ====================
+
+	/// @class SctpDataChunkView
+	/// Type-safe view for SCTP DATA chunks (RFC 9260 Section 3.3.1)
+	/// Provides type-checked access to DATA chunk fields without runtime overhead
+	class SctpDataChunkView
+	{
+	public:
+		/// Construct from generic chunk (caller should verify type)
+		/// @param[in] chunk The generic chunk to wrap
+		explicit SctpDataChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		/// Factory method - creates a view, use isValid() to check if chunk type matches
+		/// @param[in] chunk The generic chunk to wrap
+		/// @return A view that may or may not be valid depending on chunk type
+		static SctpDataChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpDataChunkView(chunk);
+		}
+
+		/// @return True if this view points to a valid DATA chunk
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::DATA;
+		}
+
+		/// @return The underlying generic chunk
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+
+		/// @return Chunk flags
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+
+		/// @return Chunk length
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+
+		/// @return Total size including padding
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		// ==================== DATA-specific Methods ====================
+
+		/// @return Transmission Sequence Number
+		uint32_t getTsn() const;
+
+		/// @return Stream Identifier
+		uint16_t getStreamId() const;
+
+		/// @return Stream Sequence Number
+		uint16_t getSequenceNumber() const;
+
+		/// @return Payload Protocol Identifier (in host byte order)
+		/// @note RFC 9260 states PPID byte order is upper layer's responsibility,
+		/// but this library converts for API consistency
+		uint32_t getPpid() const;
+
+		/// @return Pointer to user data payload
+		uint8_t* getUserData() const;
+
+		/// @return Length of user data payload
+		size_t getUserDataLength() const;
+
+		// ==================== Flag Accessors ====================
+
+		/// @return True if this is the beginning fragment (B bit set)
+		bool isBeginFragment() const;
+
+		/// @return True if this is the ending fragment (E bit set)
+		bool isEndFragment() const;
+
+		/// @return True if unordered delivery (U bit set)
+		bool isUnordered() const;
+
+		/// @return True if immediate bit is set (I bit, RFC 7053)
+		bool isImmediate() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpInitChunkView
+	/// Type-safe view for SCTP INIT chunks (RFC 9260 Section 3.3.2)
+	/// Provides type-checked access to INIT chunk fields without runtime overhead
+	class SctpInitChunkView
+	{
+	public:
+		/// Construct from generic chunk (caller should verify type)
+		/// @param[in] chunk The generic chunk to wrap
+		explicit SctpInitChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		/// Factory method - creates a view, use isValid() to check if chunk type matches
+		/// @param[in] chunk The generic chunk to wrap
+		/// @return A view that may or may not be valid depending on chunk type
+		static SctpInitChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpInitChunkView(chunk);
+		}
+
+		/// @return True if this view points to a valid INIT chunk
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::INIT;
+		}
+
+		/// @return The underlying generic chunk
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+
+		/// @return Chunk flags
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+
+		/// @return Chunk length
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+
+		/// @return Total size including padding
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		// ==================== INIT-specific Methods ====================
+
+		/// @return Initiate Tag
+		uint32_t getInitiateTag() const;
+
+		/// @return Advertised Receiver Window Credit
+		uint32_t getArwnd() const;
+
+		/// @return Number of Outbound Streams
+		uint16_t getNumOutboundStreams() const;
+
+		/// @return Number of Inbound Streams
+		uint16_t getNumInboundStreams() const;
+
+		/// @return Initial TSN
+		uint32_t getInitialTsn() const;
+
+		/// @return Pointer to first parameter, or nullptr if none
+		uint8_t* getFirstParameter() const;
+
+		/// @return Size of parameters section
+		size_t getParametersLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpInitAckChunkView
+	/// Type-safe view for SCTP INIT-ACK chunks (RFC 9260 Section 3.3.3)
+	/// Same structure as INIT chunk
+	class SctpInitAckChunkView
+	{
+	public:
+		/// Construct from generic chunk (caller should verify type)
+		/// @param[in] chunk The generic chunk to wrap
+		explicit SctpInitAckChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		/// Factory method - creates a view, use isValid() to check if chunk type matches
+		/// @param[in] chunk The generic chunk to wrap
+		/// @return A view that may or may not be valid depending on chunk type
+		static SctpInitAckChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpInitAckChunkView(chunk);
+		}
+
+		/// @return True if this view points to a valid INIT-ACK chunk
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::INIT_ACK;
+		}
+
+		/// @return The underlying generic chunk
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+
+		/// @return Chunk flags
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+
+		/// @return Chunk length
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+
+		/// @return Total size including padding
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		// ==================== INIT-ACK-specific Methods ====================
+
+		/// @return Initiate Tag
+		uint32_t getInitiateTag() const;
+
+		/// @return Advertised Receiver Window Credit
+		uint32_t getArwnd() const;
+
+		/// @return Number of Outbound Streams
+		uint16_t getNumOutboundStreams() const;
+
+		/// @return Number of Inbound Streams
+		uint16_t getNumInboundStreams() const;
+
+		/// @return Initial TSN
+		uint32_t getInitialTsn() const;
+
+		/// @return Pointer to first parameter, or nullptr if none
+		uint8_t* getFirstParameter() const;
+
+		/// @return Size of parameters section
+		size_t getParametersLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpSackChunkView
+	/// Type-safe view for SCTP SACK chunks (RFC 9260 Section 3.3.4)
+	/// Provides type-checked access to SACK chunk fields without runtime overhead
+	class SctpSackChunkView
+	{
+	public:
+		/// Construct from generic chunk (caller should verify type)
+		/// @param[in] chunk The generic chunk to wrap
+		explicit SctpSackChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		/// Factory method - creates a view, use isValid() to check if chunk type matches
+		/// @param[in] chunk The generic chunk to wrap
+		/// @return A view that may or may not be valid depending on chunk type
+		static SctpSackChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpSackChunkView(chunk);
+		}
+
+		/// @return True if this view points to a valid SACK chunk
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::SACK;
+		}
+
+		/// @return The underlying generic chunk
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+
+		/// @return Chunk flags
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+
+		/// @return Chunk length
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+
+		/// @return Total size including padding
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		// ==================== SACK-specific Methods ====================
+
+		/// @return Cumulative TSN Ack
+		uint32_t getCumulativeTsnAck() const;
+
+		/// @return Advertised Receiver Window Credit
+		uint32_t getArwnd() const;
+
+		/// @return Number of Gap Ack Blocks
+		uint16_t getNumGapBlocks() const;
+
+		/// @return Number of Duplicate TSNs
+		uint16_t getNumDupTsns() const;
+
+		/// Get Gap Ack Blocks
+		/// @return Vector of gap ack blocks (in host byte order)
+		std::vector<sctp_gap_ack_block> getGapBlocks() const;
+
+		/// Get Duplicate TSNs
+		/// @return Vector of duplicate TSNs (in host byte order)
+		std::vector<uint32_t> getDupTsns() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpHeartbeatChunkView
+	/// Type-safe view for SCTP HEARTBEAT chunks (RFC 9260 Section 3.3.5)
+	class SctpHeartbeatChunkView
+	{
+	public:
+		explicit SctpHeartbeatChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpHeartbeatChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpHeartbeatChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::HEARTBEAT;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Pointer to Heartbeat Information TLV parameter
+		uint8_t* getInfo() const;
+		/// @return Size of Heartbeat Information (entire TLV)
+		size_t getInfoLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpHeartbeatAckChunkView
+	/// Type-safe view for SCTP HEARTBEAT-ACK chunks (RFC 9260 Section 3.3.6)
+	class SctpHeartbeatAckChunkView
+	{
+	public:
+		explicit SctpHeartbeatAckChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpHeartbeatAckChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpHeartbeatAckChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::HEARTBEAT_ACK;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Pointer to Heartbeat Information TLV parameter
+		uint8_t* getInfo() const;
+		/// @return Size of Heartbeat Information (entire TLV)
+		size_t getInfoLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpAbortChunkView
+	/// Type-safe view for SCTP ABORT chunks (RFC 9260 Section 3.3.7)
+	class SctpAbortChunkView
+	{
+	public:
+		explicit SctpAbortChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpAbortChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpAbortChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::ABORT;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return True if T bit is set (Verification Tag reflected)
+		bool isTBitSet() const;
+		/// @return Pointer to first error cause, or nullptr if none
+		uint8_t* getFirstErrorCause() const;
+		/// @return Size of error causes section
+		size_t getErrorCausesLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpErrorChunkView
+	/// Type-safe view for SCTP ERROR chunks (RFC 9260 Section 3.3.10)
+	class SctpErrorChunkView
+	{
+	public:
+		explicit SctpErrorChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpErrorChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpErrorChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::SCTP_ERROR;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Pointer to first error cause, or nullptr if none
+		uint8_t* getFirstCause() const;
+		/// @return Size of error causes section
+		size_t getCausesLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpShutdownChunkView
+	/// Type-safe view for SCTP SHUTDOWN chunks (RFC 9260 Section 3.3.8)
+	class SctpShutdownChunkView
+	{
+	public:
+		explicit SctpShutdownChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpShutdownChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpShutdownChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::SHUTDOWN;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Cumulative TSN Ack
+		uint32_t getCumulativeTsnAck() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpShutdownAckChunkView
+	/// Type-safe view for SCTP SHUTDOWN-ACK chunks (RFC 9260 Section 3.3.9)
+	class SctpShutdownAckChunkView
+	{
+	public:
+		explicit SctpShutdownAckChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpShutdownAckChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpShutdownAckChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::SHUTDOWN_ACK;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpShutdownCompleteChunkView
+	/// Type-safe view for SCTP SHUTDOWN-COMPLETE chunks (RFC 9260 Section 3.3.15)
+	class SctpShutdownCompleteChunkView
+	{
+	public:
+		explicit SctpShutdownCompleteChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpShutdownCompleteChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpShutdownCompleteChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::SHUTDOWN_COMPLETE;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return True if T bit is set (Verification Tag reflected)
+		bool isTBitSet() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpCookieEchoChunkView
+	/// Type-safe view for SCTP COOKIE-ECHO chunks (RFC 9260 Section 3.3.11)
+	class SctpCookieEchoChunkView
+	{
+	public:
+		explicit SctpCookieEchoChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpCookieEchoChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpCookieEchoChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::COOKIE_ECHO;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Pointer to cookie data
+		uint8_t* getCookie() const;
+		/// @return Size of cookie data
+		size_t getCookieLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpCookieAckChunkView
+	/// Type-safe view for SCTP COOKIE-ACK chunks (RFC 9260 Section 3.3.12)
+	class SctpCookieAckChunkView
+	{
+	public:
+		explicit SctpCookieAckChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpCookieAckChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpCookieAckChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::COOKIE_ACK;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpEcneChunkView
+	/// Type-safe view for SCTP ECNE chunks (RFC 9260 Section 3.3.13)
+	class SctpEcneChunkView
+	{
+	public:
+		explicit SctpEcneChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpEcneChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpEcneChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::ECNE;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Lowest TSN Number
+		uint32_t getLowestTsn() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpCwrChunkView
+	/// Type-safe view for SCTP CWR chunks (RFC 9260 Section 3.3.14)
+	class SctpCwrChunkView
+	{
+	public:
+		explicit SctpCwrChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpCwrChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpCwrChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::CWR;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Lowest TSN Number
+		uint32_t getLowestTsn() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpAuthChunkView
+	/// Type-safe view for SCTP AUTH chunks (RFC 4895)
+	class SctpAuthChunkView
+	{
+	public:
+		explicit SctpAuthChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpAuthChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpAuthChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::AUTH;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Shared Key Identifier
+		uint16_t getSharedKeyId() const;
+		/// @return HMAC Identifier
+		uint16_t getHmacId() const;
+		/// @return Pointer to HMAC data
+		uint8_t* getHmacData() const;
+		/// @return Length of HMAC data
+		size_t getHmacLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpForwardTsnChunkView
+	/// Type-safe view for SCTP FORWARD-TSN chunks (RFC 3758)
+	class SctpForwardTsnChunkView
+	{
+	public:
+		explicit SctpForwardTsnChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpForwardTsnChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpForwardTsnChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::FORWARD_TSN;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return New Cumulative TSN
+		uint32_t getNewCumulativeTsn() const;
+		/// @return Number of streams in the chunk
+		size_t getStreamCount() const;
+		/// @return Vector of stream information
+		std::vector<sctp_forward_tsn_stream> getStreams() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpIDataChunkView
+	/// Type-safe view for SCTP I-DATA chunks (RFC 8260)
+	class SctpIDataChunkView
+	{
+	public:
+		explicit SctpIDataChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpIDataChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpIDataChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::I_DATA;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Transmission Sequence Number
+		uint32_t getTsn() const;
+		/// @return Stream Identifier
+		uint16_t getStreamId() const;
+		/// @return Reserved field
+		uint16_t getReserved() const;
+		/// @return Message Identifier
+		uint32_t getMessageId() const;
+		/// @return PPID (if B bit set) or FSN (if B bit not set)
+		uint32_t getPpidOrFsn() const;
+		/// @return Pointer to user data payload
+		uint8_t* getUserData() const;
+		/// @return Length of user data payload
+		size_t getUserDataLength() const;
+
+		// Flag accessors
+		/// @return True if this is the beginning fragment (B bit set)
+		bool isBeginFragment() const;
+		/// @return True if this is the ending fragment (E bit set)
+		bool isEndFragment() const;
+		/// @return True if unordered delivery (U bit set)
+		bool isUnordered() const;
+		/// @return True if immediate bit is set (I bit)
+		bool isImmediate() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpIForwardTsnChunkView
+	/// Type-safe view for SCTP I-FORWARD-TSN chunks (RFC 8260)
+	class SctpIForwardTsnChunkView
+	{
+	public:
+		explicit SctpIForwardTsnChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpIForwardTsnChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpIForwardTsnChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::I_FORWARD_TSN;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return New Cumulative TSN
+		uint32_t getNewCumulativeTsn() const;
+		/// @return Number of streams in the chunk
+		size_t getStreamCount() const;
+		/// @return Vector of stream information
+		std::vector<sctp_iforward_tsn_stream> getStreams() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpAsconfChunkView
+	/// Type-safe view for SCTP ASCONF chunks (RFC 5061)
+	class SctpAsconfChunkView
+	{
+	public:
+		explicit SctpAsconfChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpAsconfChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpAsconfChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::ASCONF;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Serial Number
+		uint32_t getSerialNumber() const;
+		/// @return Pointer to first parameter, or nullptr if none
+		uint8_t* getFirstParameter() const;
+		/// @return Size of parameters section
+		size_t getParametersLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpAsconfAckChunkView
+	/// Type-safe view for SCTP ASCONF-ACK chunks (RFC 5061)
+	class SctpAsconfAckChunkView
+	{
+	public:
+		explicit SctpAsconfAckChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpAsconfAckChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpAsconfAckChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::ASCONF_ACK;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Serial Number
+		uint32_t getSerialNumber() const;
+		/// @return Pointer to first parameter, or nullptr if none
+		uint8_t* getFirstParameter() const;
+		/// @return Size of parameters section
+		size_t getParametersLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpReconfigChunkView
+	/// Type-safe view for SCTP RE-CONFIG chunks (RFC 6525)
+	class SctpReconfigChunkView
+	{
+	public:
+		explicit SctpReconfigChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpReconfigChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpReconfigChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::RE_CONFIG;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Pointer to first parameter, or nullptr if none
+		uint8_t* getFirstParameter() const;
+		/// @return Size of parameters section
+		size_t getParametersLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpPadChunkView
+	/// Type-safe view for SCTP PAD chunks (RFC 4820)
+	class SctpPadChunkView
+	{
+	public:
+		explicit SctpPadChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpPadChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpPadChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::PAD;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Padding data pointer
+		uint8_t* getPaddingData() const;
+		/// @return Length of padding data
+		size_t getPaddingLength() const;
+
+	private:
+		SctpChunk m_Chunk;
+	};
+
+	/// @class SctpNrSackChunkView
+	/// Type-safe view for SCTP NR-SACK chunks (RFC 6675)
+	class SctpNrSackChunkView
+	{
+	public:
+		explicit SctpNrSackChunkView(SctpChunk chunk) : m_Chunk(chunk)
+		{}
+
+		static SctpNrSackChunkView fromChunk(SctpChunk chunk)
+		{
+			return SctpNrSackChunkView(chunk);
+		}
+
+		bool isValid() const
+		{
+			return m_Chunk.isNotNull() && m_Chunk.getChunkType() == SctpChunkType::NR_SACK;
+		}
+
+		SctpChunk getChunk() const
+		{
+			return m_Chunk;
+		}
+		uint8_t getFlags() const
+		{
+			return m_Chunk.getFlags();
+		}
+		uint16_t getLength() const
+		{
+			return m_Chunk.getLength();
+		}
+		size_t getTotalSize() const
+		{
+			return m_Chunk.getTotalSize();
+		}
+
+		/// @return Cumulative TSN Ack
+		uint32_t getCumulativeTsnAck() const;
+		/// @return Advertised Receiver Window Credit
+		uint32_t getArwnd() const;
+		/// @return Number of Gap Ack Blocks
+		uint16_t getNumGapBlocks() const;
+		/// @return Number of NR Gap Ack Blocks
+		uint16_t getNumNrGapBlocks() const;
+		/// @return Number of Duplicate TSNs
+		uint16_t getNumDupTsns() const;
+		/// @return True if All Non-Renegable flag (A bit) is set
+		bool isAllNonRenegable() const;
+		/// @return Vector of gap ack blocks (in host byte order)
+		std::vector<sctp_gap_ack_block> getGapBlocks() const;
+		/// @return Vector of NR gap ack blocks (in host byte order)
+		std::vector<sctp_gap_ack_block> getNrGapBlocks() const;
+		/// @return Vector of duplicate TSNs (in host byte order)
+		std::vector<uint32_t> getDupTsns() const;
+
+	private:
+		SctpChunk m_Chunk;
 	};
 
 	/// @class SctpLayer
@@ -1419,6 +2436,176 @@ namespace pcpp
 		/// @return First chunk of specified type or null chunk if not found
 		SctpChunk getChunk(SctpChunkType chunkType) const;
 
+		// ==================== Typed Chunk Getters ====================
+
+		/// Get DATA chunk as typed view
+		/// @return Valid view if DATA chunk exists, invalid view otherwise
+		SctpDataChunkView getDataChunk() const
+		{
+			return SctpDataChunkView::fromChunk(getChunk(SctpChunkType::DATA));
+		}
+
+		/// Get INIT chunk as typed view
+		/// @return Valid view if INIT chunk exists, invalid view otherwise
+		SctpInitChunkView getInitChunk() const
+		{
+			return SctpInitChunkView::fromChunk(getChunk(SctpChunkType::INIT));
+		}
+
+		/// Get INIT-ACK chunk as typed view
+		/// @return Valid view if INIT-ACK chunk exists, invalid view otherwise
+		SctpInitAckChunkView getInitAckChunk() const
+		{
+			return SctpInitAckChunkView::fromChunk(getChunk(SctpChunkType::INIT_ACK));
+		}
+
+		/// Get SACK chunk as typed view
+		/// @return Valid view if SACK chunk exists, invalid view otherwise
+		SctpSackChunkView getSackChunk() const
+		{
+			return SctpSackChunkView::fromChunk(getChunk(SctpChunkType::SACK));
+		}
+
+		/// Get HEARTBEAT chunk as typed view
+		/// @return Valid view if HEARTBEAT chunk exists, invalid view otherwise
+		SctpHeartbeatChunkView getHeartbeatChunk() const
+		{
+			return SctpHeartbeatChunkView::fromChunk(getChunk(SctpChunkType::HEARTBEAT));
+		}
+
+		/// Get HEARTBEAT-ACK chunk as typed view
+		/// @return Valid view if HEARTBEAT-ACK chunk exists, invalid view otherwise
+		SctpHeartbeatAckChunkView getHeartbeatAckChunk() const
+		{
+			return SctpHeartbeatAckChunkView::fromChunk(getChunk(SctpChunkType::HEARTBEAT_ACK));
+		}
+
+		/// Get ABORT chunk as typed view
+		/// @return Valid view if ABORT chunk exists, invalid view otherwise
+		SctpAbortChunkView getAbortChunk() const
+		{
+			return SctpAbortChunkView::fromChunk(getChunk(SctpChunkType::ABORT));
+		}
+
+		/// Get SHUTDOWN chunk as typed view
+		/// @return Valid view if SHUTDOWN chunk exists, invalid view otherwise
+		SctpShutdownChunkView getShutdownChunk() const
+		{
+			return SctpShutdownChunkView::fromChunk(getChunk(SctpChunkType::SHUTDOWN));
+		}
+
+		/// Get SHUTDOWN-ACK chunk as typed view
+		/// @return Valid view if SHUTDOWN-ACK chunk exists, invalid view otherwise
+		SctpShutdownAckChunkView getShutdownAckChunk() const
+		{
+			return SctpShutdownAckChunkView::fromChunk(getChunk(SctpChunkType::SHUTDOWN_ACK));
+		}
+
+		/// Get SHUTDOWN-COMPLETE chunk as typed view
+		/// @return Valid view if SHUTDOWN-COMPLETE chunk exists, invalid view otherwise
+		SctpShutdownCompleteChunkView getShutdownCompleteChunk() const
+		{
+			return SctpShutdownCompleteChunkView::fromChunk(getChunk(SctpChunkType::SHUTDOWN_COMPLETE));
+		}
+
+		/// Get ERROR chunk as typed view
+		/// @return Valid view if ERROR chunk exists, invalid view otherwise
+		SctpErrorChunkView getErrorChunk() const
+		{
+			return SctpErrorChunkView::fromChunk(getChunk(SctpChunkType::SCTP_ERROR));
+		}
+
+		/// Get COOKIE-ECHO chunk as typed view
+		/// @return Valid view if COOKIE-ECHO chunk exists, invalid view otherwise
+		SctpCookieEchoChunkView getCookieEchoChunk() const
+		{
+			return SctpCookieEchoChunkView::fromChunk(getChunk(SctpChunkType::COOKIE_ECHO));
+		}
+
+		/// Get COOKIE-ACK chunk as typed view
+		/// @return Valid view if COOKIE-ACK chunk exists, invalid view otherwise
+		SctpCookieAckChunkView getCookieAckChunk() const
+		{
+			return SctpCookieAckChunkView::fromChunk(getChunk(SctpChunkType::COOKIE_ACK));
+		}
+
+		/// Get ECNE chunk as typed view
+		/// @return Valid view if ECNE chunk exists, invalid view otherwise
+		SctpEcneChunkView getEcneChunk() const
+		{
+			return SctpEcneChunkView::fromChunk(getChunk(SctpChunkType::ECNE));
+		}
+
+		/// Get CWR chunk as typed view
+		/// @return Valid view if CWR chunk exists, invalid view otherwise
+		SctpCwrChunkView getCwrChunk() const
+		{
+			return SctpCwrChunkView::fromChunk(getChunk(SctpChunkType::CWR));
+		}
+
+		/// Get AUTH chunk as typed view
+		/// @return Valid view if AUTH chunk exists, invalid view otherwise
+		SctpAuthChunkView getAuthChunk() const
+		{
+			return SctpAuthChunkView::fromChunk(getChunk(SctpChunkType::AUTH));
+		}
+
+		/// Get FORWARD-TSN chunk as typed view
+		/// @return Valid view if FORWARD-TSN chunk exists, invalid view otherwise
+		SctpForwardTsnChunkView getForwardTsnChunk() const
+		{
+			return SctpForwardTsnChunkView::fromChunk(getChunk(SctpChunkType::FORWARD_TSN));
+		}
+
+		/// Get I-DATA chunk as typed view
+		/// @return Valid view if I-DATA chunk exists, invalid view otherwise
+		SctpIDataChunkView getIDataChunk() const
+		{
+			return SctpIDataChunkView::fromChunk(getChunk(SctpChunkType::I_DATA));
+		}
+
+		/// Get I-FORWARD-TSN chunk as typed view
+		/// @return Valid view if I-FORWARD-TSN chunk exists, invalid view otherwise
+		SctpIForwardTsnChunkView getIForwardTsnChunk() const
+		{
+			return SctpIForwardTsnChunkView::fromChunk(getChunk(SctpChunkType::I_FORWARD_TSN));
+		}
+
+		/// Get ASCONF chunk as typed view
+		/// @return Valid view if ASCONF chunk exists, invalid view otherwise
+		SctpAsconfChunkView getAsconfChunk() const
+		{
+			return SctpAsconfChunkView::fromChunk(getChunk(SctpChunkType::ASCONF));
+		}
+
+		/// Get ASCONF-ACK chunk as typed view
+		/// @return Valid view if ASCONF-ACK chunk exists, invalid view otherwise
+		SctpAsconfAckChunkView getAsconfAckChunk() const
+		{
+			return SctpAsconfAckChunkView::fromChunk(getChunk(SctpChunkType::ASCONF_ACK));
+		}
+
+		/// Get RE-CONFIG chunk as typed view
+		/// @return Valid view if RE-CONFIG chunk exists, invalid view otherwise
+		SctpReconfigChunkView getReconfigChunk() const
+		{
+			return SctpReconfigChunkView::fromChunk(getChunk(SctpChunkType::RE_CONFIG));
+		}
+
+		/// Get PAD chunk as typed view
+		/// @return Valid view if PAD chunk exists, invalid view otherwise
+		SctpPadChunkView getPadChunk() const
+		{
+			return SctpPadChunkView::fromChunk(getChunk(SctpChunkType::PAD));
+		}
+
+		/// Get NR-SACK chunk as typed view
+		/// @return Valid view if NR-SACK chunk exists, invalid view otherwise
+		SctpNrSackChunkView getNrSackChunk() const
+		{
+			return SctpNrSackChunkView::fromChunk(getChunk(SctpChunkType::NR_SACK));
+		}
+
 		// ==================== Checksum ====================
 
 		/// Calculate CRC32c checksum
@@ -1477,9 +2664,8 @@ namespace pcpp
 		/// @return True if chunk was added successfully
 		/// @note RFC 9260 states that PPID byte order conversion is the upper layer's responsibility.
 		/// For API consistency, this method converts PPID from host to network byte order.
-		bool addDataChunk(uint32_t tsn, uint16_t streamId, uint16_t streamSeq, uint32_t ppid,
-		                  const uint8_t* userData, size_t userDataLen,
-		                  bool beginFragment = true, bool endFragment = true,
+		bool addDataChunk(uint32_t tsn, uint16_t streamId, uint16_t streamSeq, uint32_t ppid, const uint8_t* userData,
+		                  size_t userDataLen, bool beginFragment = true, bool endFragment = true,
 		                  bool unordered = false, bool immediate = false);
 
 		/// Add an INIT chunk to the SCTP packet
@@ -1491,10 +2677,8 @@ namespace pcpp
 		/// @param[in] parameters Optional parameters data (can be nullptr)
 		/// @param[in] parametersLen Length of parameters data
 		/// @return True if chunk was added successfully
-		bool addInitChunk(uint32_t initiateTag, uint32_t arwnd,
-		                  uint16_t numOutboundStreams, uint16_t numInboundStreams,
-		                  uint32_t initialTsn,
-		                  const uint8_t* parameters = nullptr, size_t parametersLen = 0);
+		bool addInitChunk(uint32_t initiateTag, uint32_t arwnd, uint16_t numOutboundStreams, uint16_t numInboundStreams,
+		                  uint32_t initialTsn, const uint8_t* parameters = nullptr, size_t parametersLen = 0);
 
 		/// Add an INIT-ACK chunk to the SCTP packet
 		/// @param[in] initiateTag Initiate Tag
@@ -1505,10 +2689,9 @@ namespace pcpp
 		/// @param[in] parameters Optional parameters data (can be nullptr)
 		/// @param[in] parametersLen Length of parameters data
 		/// @return True if chunk was added successfully
-		bool addInitAckChunk(uint32_t initiateTag, uint32_t arwnd,
-		                     uint16_t numOutboundStreams, uint16_t numInboundStreams,
-		                     uint32_t initialTsn,
-		                     const uint8_t* parameters = nullptr, size_t parametersLen = 0);
+		bool addInitAckChunk(uint32_t initiateTag, uint32_t arwnd, uint16_t numOutboundStreams,
+		                     uint16_t numInboundStreams, uint32_t initialTsn, const uint8_t* parameters = nullptr,
+		                     size_t parametersLen = 0);
 
 		/// Add a SACK chunk to the SCTP packet
 		/// @param[in] cumulativeTsnAck Cumulative TSN Ack
@@ -1531,8 +2714,7 @@ namespace pcpp
 		bool addNrSackChunk(uint32_t cumulativeTsnAck, uint32_t arwnd,
 		                    const std::vector<sctp_gap_ack_block>& gapBlocks = {},
 		                    const std::vector<sctp_gap_ack_block>& nrGapBlocks = {},
-		                    const std::vector<uint32_t>& dupTsns = {},
-		                    bool allNonRenegable = false);
+		                    const std::vector<uint32_t>& dupTsns = {}, bool allNonRenegable = false);
 
 		/// Add a HEARTBEAT chunk to the SCTP packet
 		/// @param[in] heartbeatInfo Pointer to heartbeat info data
@@ -1597,8 +2779,7 @@ namespace pcpp
 		/// @param[in] newCumulativeTsn New Cumulative TSN
 		/// @param[in] streams Vector of stream/sequence pairs to skip
 		/// @return True if chunk was added successfully
-		bool addForwardTsnChunk(uint32_t newCumulativeTsn,
-		                        const std::vector<sctp_forward_tsn_stream>& streams = {});
+		bool addForwardTsnChunk(uint32_t newCumulativeTsn, const std::vector<sctp_forward_tsn_stream>& streams = {});
 
 		/// Add an I-DATA chunk to the SCTP packet (RFC 8260)
 		/// @param[in] tsn Transmission Sequence Number
@@ -1612,17 +2793,15 @@ namespace pcpp
 		/// @param[in] unordered True for unordered delivery (U bit)
 		/// @param[in] immediate True for immediate bit (I bit)
 		/// @return True if chunk was added successfully
-		bool addIDataChunk(uint32_t tsn, uint16_t streamId, uint32_t mid, uint32_t ppidOrFsn,
-		                   const uint8_t* userData, size_t userDataLen,
-		                   bool beginFragment = true, bool endFragment = true,
+		bool addIDataChunk(uint32_t tsn, uint16_t streamId, uint32_t mid, uint32_t ppidOrFsn, const uint8_t* userData,
+		                   size_t userDataLen, bool beginFragment = true, bool endFragment = true,
 		                   bool unordered = false, bool immediate = false);
 
 		/// Add an I-FORWARD-TSN chunk to the SCTP packet (RFC 8260)
 		/// @param[in] newCumulativeTsn New Cumulative TSN
 		/// @param[in] streams Vector of stream/MID tuples to skip
 		/// @return True if chunk was added successfully
-		bool addIForwardTsnChunk(uint32_t newCumulativeTsn,
-		                         const std::vector<sctp_iforward_tsn_stream>& streams = {});
+		bool addIForwardTsnChunk(uint32_t newCumulativeTsn, const std::vector<sctp_iforward_tsn_stream>& streams = {});
 
 		/// Add a PAD chunk to the SCTP packet (RFC 4820)
 		/// @param[in] paddingLen Length of padding data (will be filled with zeros)
@@ -2267,8 +3446,7 @@ namespace pcpp
 	/// @param[in] dataLen Length of data
 	/// @param[out] hmacOut Output buffer for HMAC (must be at least 20 bytes)
 	/// @return True if HMAC was calculated successfully
-	bool calculateSctpHmacSha1(const uint8_t* key, size_t keyLen,
-	                           const uint8_t* data, size_t dataLen,
+	bool calculateSctpHmacSha1(const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
 	                           uint8_t* hmacOut);
 
 	/// Calculate HMAC-SHA256 for SCTP AUTH chunk
@@ -2278,8 +3456,7 @@ namespace pcpp
 	/// @param[in] dataLen Length of data
 	/// @param[out] hmacOut Output buffer for HMAC (must be at least 32 bytes)
 	/// @return True if HMAC was calculated successfully
-	bool calculateSctpHmacSha256(const uint8_t* key, size_t keyLen,
-	                             const uint8_t* data, size_t dataLen,
+	bool calculateSctpHmacSha256(const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
 	                             uint8_t* hmacOut);
 
 	/// Verify HMAC for SCTP AUTH chunk
@@ -2291,8 +3468,7 @@ namespace pcpp
 	/// @param[in] expectedHmac Pointer to expected HMAC value
 	/// @param[in] expectedHmacLen Length of expected HMAC
 	/// @return True if HMAC matches expected value
-	bool verifySctpHmac(uint16_t hmacId, const uint8_t* key, size_t keyLen,
-	                    const uint8_t* data, size_t dataLen,
+	bool verifySctpHmac(uint16_t hmacId, const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
 	                    const uint8_t* expectedHmac, size_t expectedHmacLen);
 
 	/// Compute HMAC for SCTP AUTH chunk per RFC 4895
@@ -2308,8 +3484,8 @@ namespace pcpp
 	/// @return True if HMAC was computed successfully, false if no AUTH chunk or invalid parameters
 	/// @note Per RFC 4895, the HMAC is computed over the AUTH chunk with its HMAC field set to zero,
 	/// followed by all chunks placed after the AUTH chunk in the SCTP packet.
-	bool computeSctpAuthHmac(const SctpLayer& sctpLayer, const uint8_t* key, size_t keyLen,
-	                         uint8_t* hmacOut, size_t* hmacOutLen);
+	bool computeSctpAuthHmac(const SctpLayer& sctpLayer, const uint8_t* key, size_t keyLen, uint8_t* hmacOut,
+	                         size_t* hmacOutLen);
 
 	/// Verify AUTH chunk HMAC in an SCTP packet per RFC 4895
 	/// This is a convenience function that:
@@ -2362,8 +3538,7 @@ namespace pcpp
 	inline bool shouldReportUnrecognizedChunk(uint8_t chunkType)
 	{
 		uint8_t action = chunkType & SctpChunkActionBits::ACTION_MASK;
-		return action == SctpChunkActionBits::STOP_AND_REPORT ||
-		       action == SctpChunkActionBits::SKIP_AND_REPORT;
+		return action == SctpChunkActionBits::STOP_AND_REPORT || action == SctpChunkActionBits::SKIP_AND_REPORT;
 	}
 
 	// ==================== Parameter Action Bits (RFC 9260) ====================
@@ -2406,8 +3581,7 @@ namespace pcpp
 	inline bool shouldReportUnrecognizedParam(uint16_t paramType)
 	{
 		uint16_t action = paramType & SctpParamActionBits::ACTION_MASK;
-		return action == SctpParamActionBits::STOP_AND_REPORT ||
-		       action == SctpParamActionBits::SKIP_AND_REPORT;
+		return action == SctpParamActionBits::STOP_AND_REPORT || action == SctpParamActionBits::SKIP_AND_REPORT;
 	}
 
 }  // namespace pcpp

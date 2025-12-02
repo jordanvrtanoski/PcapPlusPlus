@@ -481,6 +481,25 @@ int main(int argc, char* argv[])
 	PTF_RUN_TEST(SctpComputeAuthHmacSha256Test, "sctp");
 	PTF_RUN_TEST(SctpComputeAuthHmacNoAuthChunkTest, "sctp");
 	PTF_RUN_TEST(SctpExtendedPpidEnumsNewTelecomTest, "sctp");
+	PTF_RUN_TEST(SctpDataChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpInitChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpInitAckChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpSackChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpChunkViewTypeSafetyTest, "sctp");
+	PTF_RUN_TEST(SctpHeartbeatChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpCookieEchoChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpAbortChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpShutdownChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpShutdownAckChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpShutdownCompleteChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpControlChunkViewTypeSafetyTest, "sctp");
+	PTF_RUN_TEST(SctpAuthChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpForwardTsnChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpIDataChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpIForwardTsnChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpNrSackChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpPadChunkViewTest, "sctp");
+	PTF_RUN_TEST(SctpExtensionChunkViewTypeSafetyTest, "sctp");
 
 	PTF_END_RUNNING_TESTS;
 }

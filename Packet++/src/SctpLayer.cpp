@@ -18,38 +18,35 @@ namespace pcpp
 		// CRC32c lookup table (Castagnoli polynomial)
 		// Pre-computed for polynomial 0x1EDC6F41 (reflected)
 		constexpr uint32_t crc32cTable[256] = {
-		    0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4, 0xC79A971F, 0x35F1141C, 0x26A1E7E8, 0xD4CA64EB,
-		    0x8AD958CF, 0x78B2DBCC, 0x6BE22838, 0x9989AB3B, 0x4D43CFD0, 0xBF284CD3, 0xAC78BF27, 0x5E133C24,
-		    0x105EC76F, 0xE235446C, 0xF165B798, 0x030E349B, 0xD7C45070, 0x25AFD373, 0x36FF2087, 0xC494A384,
-		    0x9A879FA0, 0x68EC1CA3, 0x7BBCEF57, 0x89D76C54, 0x5D1D08BF, 0xAF768BBC, 0xBC267848, 0x4E4DFB4B,
-		    0x20BD8EDE, 0xD2D60DDD, 0xC186FE29, 0x33ED7D2A, 0xE72719C1, 0x154C9AC2, 0x061C6936, 0xF477EA35,
-		    0xAA64D611, 0x580F5512, 0x4B5FA6E6, 0xB93425E5, 0x6DFE410E, 0x9F95C20D, 0x8CC531F9, 0x7EAEB2FA,
-		    0x30E349B1, 0xC288CAB2, 0xD1D83946, 0x23B3BA45, 0xF779DEAE, 0x05125DAD, 0x1642AE59, 0xE4292D5A,
-		    0xBA3A117E, 0x4851927D, 0x5B016189, 0xA96AE28A, 0x7DA08661, 0x8FCB0562, 0x9C9BF696, 0x6EF07595,
-		    0x417B1DBC, 0xB3109EBF, 0xA0406D4B, 0x522BEE48, 0x86E18AA3, 0x748A09A0, 0x67DAFA54, 0x95B17957,
-		    0xCBA24573, 0x39C9C670, 0x2A993584, 0xD8F2B687, 0x0C38D26C, 0xFE53516F, 0xED03A29B, 0x1F682198,
-		    0x5125DAD3, 0xA34E59D0, 0xB01EAA24, 0x42752927, 0x96BF4DCC, 0x64D4CECF, 0x77843D3B, 0x85EFBE38,
-		    0xDBFC821C, 0x2997011F, 0x3AC7F2EB, 0xC8AC71E8, 0x1C661503, 0xEE0D9600, 0xFD5D65F4, 0x0F36E6F7,
-		    0x61C69362, 0x93AD1061, 0x80FDE395, 0x72966096, 0xA65C047D, 0x5437877E, 0x4767748A, 0xB50CF789,
-		    0xEB1FCBAD, 0x197448AE, 0x0A24BB5A, 0xF84F3859, 0x2C855CB2, 0xDEEEDFB1, 0xCDBE2C45, 0x3FD5AF46,
-		    0x7198540D, 0x83F3D70E, 0x90A324FA, 0x62C8A7F9, 0xB602C312, 0x44694011, 0x5739B3E5, 0xA55230E6,
-		    0xFB410CC2, 0x092A8FC1, 0x1A7A7C35, 0xE811FF36, 0x3CDB9BDD, 0xCEB018DE, 0xDDE0EB2A, 0x2F8B6829,
-		    0x82F63B78, 0x709DB87B, 0x63CD4B8F, 0x91A6C88C, 0x456CAC67, 0xB7072F64, 0xA457DC90, 0x563C5F93,
-		    0x082F63B7, 0xFA44E0B4, 0xE9141340, 0x1B7F9043, 0xCFB5F4A8, 0x3DDE77AB, 0x2E8E845F, 0xDCE5075C,
-		    0x92A8FC17, 0x60C37F14, 0x73938CE0, 0x81F80FE3, 0x55326B08, 0xA759E80B, 0xB4091BFF, 0x466298FC,
-		    0x1871A4D8, 0xEA1A27DB, 0xF94AD42F, 0x0B21572C, 0xDFEB33C7, 0x2D80B0C4, 0x3ED04330, 0xCCBBC033,
-		    0xA24BB5A6, 0x502036A5, 0x4370C551, 0xB11B4652, 0x65D122B9, 0x97BAA1BA, 0x84EA524E, 0x7681D14D,
-		    0x2892ED69, 0xDAF96E6A, 0xC9A99D9E, 0x3BC21E9D, 0xEF087A76, 0x1D63F975, 0x0E330A81, 0xFC588982,
-		    0xB21572C9, 0x407EF1CA, 0x532E023E, 0xA145813D, 0x758FE5D6, 0x87E466D5, 0x94B49521, 0x66DF1622,
-		    0x38CC2A06, 0xCAA7A905, 0xD9F75AF1, 0x2B9CD9F2, 0xFF56BD19, 0x0D3D3E1A, 0x1E6DCDEE, 0xEC064EED,
-		    0xC38D26C4, 0x31E6A5C7, 0x22B65633, 0xD0DDD530, 0x0417B1DB, 0xF67C32D8, 0xE52CC12C, 0x1747422F,
-		    0x49547E0B, 0xBB3FFD08, 0xA86F0EFC, 0x5A048DFF, 0x8ECEE914, 0x7CA56A17, 0x6FF599E3, 0x9D9E1AE0,
-		    0xD3D3E1AB, 0x21B862A8, 0x32E8915C, 0xC083125F, 0x144976B4, 0xE622F5B7, 0xF5720643, 0x07198540,
-		    0x590AB964, 0xAB613A67, 0xB831C993, 0x4A5A4A90, 0x9E902E7B, 0x6CFBAD78, 0x7FAB5E8C, 0x8DC0DD8F,
-		    0xE330A81A, 0x115B2B19, 0x020BD8ED, 0xF0605BEE, 0x24AA3F05, 0xD6C1BC06, 0xC5914FF2, 0x37FACCF1,
-		    0x69E9F0D5, 0x9B8273D6, 0x88D28022, 0x7AB90321, 0xAE7367CA, 0x5C18E4C9, 0x4F48173D, 0xBD23943E,
-		    0xF36E6F75, 0x0105EC76, 0x12551F82, 0xE03E9C81, 0x34F4F86A, 0xC69F7B69, 0xD5CF889D, 0x27A40B9E,
-		    0x79B737BA, 0x8BDCB4B9, 0x988C474D, 0x6AE7C44E, 0xBE2DA0A5, 0x4C4623A6, 0x5F16D052, 0xAD7D5351
+			0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4, 0xC79A971F, 0x35F1141C, 0x26A1E7E8, 0xD4CA64EB, 0x8AD958CF,
+			0x78B2DBCC, 0x6BE22838, 0x9989AB3B, 0x4D43CFD0, 0xBF284CD3, 0xAC78BF27, 0x5E133C24, 0x105EC76F, 0xE235446C,
+			0xF165B798, 0x030E349B, 0xD7C45070, 0x25AFD373, 0x36FF2087, 0xC494A384, 0x9A879FA0, 0x68EC1CA3, 0x7BBCEF57,
+			0x89D76C54, 0x5D1D08BF, 0xAF768BBC, 0xBC267848, 0x4E4DFB4B, 0x20BD8EDE, 0xD2D60DDD, 0xC186FE29, 0x33ED7D2A,
+			0xE72719C1, 0x154C9AC2, 0x061C6936, 0xF477EA35, 0xAA64D611, 0x580F5512, 0x4B5FA6E6, 0xB93425E5, 0x6DFE410E,
+			0x9F95C20D, 0x8CC531F9, 0x7EAEB2FA, 0x30E349B1, 0xC288CAB2, 0xD1D83946, 0x23B3BA45, 0xF779DEAE, 0x05125DAD,
+			0x1642AE59, 0xE4292D5A, 0xBA3A117E, 0x4851927D, 0x5B016189, 0xA96AE28A, 0x7DA08661, 0x8FCB0562, 0x9C9BF696,
+			0x6EF07595, 0x417B1DBC, 0xB3109EBF, 0xA0406D4B, 0x522BEE48, 0x86E18AA3, 0x748A09A0, 0x67DAFA54, 0x95B17957,
+			0xCBA24573, 0x39C9C670, 0x2A993584, 0xD8F2B687, 0x0C38D26C, 0xFE53516F, 0xED03A29B, 0x1F682198, 0x5125DAD3,
+			0xA34E59D0, 0xB01EAA24, 0x42752927, 0x96BF4DCC, 0x64D4CECF, 0x77843D3B, 0x85EFBE38, 0xDBFC821C, 0x2997011F,
+			0x3AC7F2EB, 0xC8AC71E8, 0x1C661503, 0xEE0D9600, 0xFD5D65F4, 0x0F36E6F7, 0x61C69362, 0x93AD1061, 0x80FDE395,
+			0x72966096, 0xA65C047D, 0x5437877E, 0x4767748A, 0xB50CF789, 0xEB1FCBAD, 0x197448AE, 0x0A24BB5A, 0xF84F3859,
+			0x2C855CB2, 0xDEEEDFB1, 0xCDBE2C45, 0x3FD5AF46, 0x7198540D, 0x83F3D70E, 0x90A324FA, 0x62C8A7F9, 0xB602C312,
+			0x44694011, 0x5739B3E5, 0xA55230E6, 0xFB410CC2, 0x092A8FC1, 0x1A7A7C35, 0xE811FF36, 0x3CDB9BDD, 0xCEB018DE,
+			0xDDE0EB2A, 0x2F8B6829, 0x82F63B78, 0x709DB87B, 0x63CD4B8F, 0x91A6C88C, 0x456CAC67, 0xB7072F64, 0xA457DC90,
+			0x563C5F93, 0x082F63B7, 0xFA44E0B4, 0xE9141340, 0x1B7F9043, 0xCFB5F4A8, 0x3DDE77AB, 0x2E8E845F, 0xDCE5075C,
+			0x92A8FC17, 0x60C37F14, 0x73938CE0, 0x81F80FE3, 0x55326B08, 0xA759E80B, 0xB4091BFF, 0x466298FC, 0x1871A4D8,
+			0xEA1A27DB, 0xF94AD42F, 0x0B21572C, 0xDFEB33C7, 0x2D80B0C4, 0x3ED04330, 0xCCBBC033, 0xA24BB5A6, 0x502036A5,
+			0x4370C551, 0xB11B4652, 0x65D122B9, 0x97BAA1BA, 0x84EA524E, 0x7681D14D, 0x2892ED69, 0xDAF96E6A, 0xC9A99D9E,
+			0x3BC21E9D, 0xEF087A76, 0x1D63F975, 0x0E330A81, 0xFC588982, 0xB21572C9, 0x407EF1CA, 0x532E023E, 0xA145813D,
+			0x758FE5D6, 0x87E466D5, 0x94B49521, 0x66DF1622, 0x38CC2A06, 0xCAA7A905, 0xD9F75AF1, 0x2B9CD9F2, 0xFF56BD19,
+			0x0D3D3E1A, 0x1E6DCDEE, 0xEC064EED, 0xC38D26C4, 0x31E6A5C7, 0x22B65633, 0xD0DDD530, 0x0417B1DB, 0xF67C32D8,
+			0xE52CC12C, 0x1747422F, 0x49547E0B, 0xBB3FFD08, 0xA86F0EFC, 0x5A048DFF, 0x8ECEE914, 0x7CA56A17, 0x6FF599E3,
+			0x9D9E1AE0, 0xD3D3E1AB, 0x21B862A8, 0x32E8915C, 0xC083125F, 0x144976B4, 0xE622F5B7, 0xF5720643, 0x07198540,
+			0x590AB964, 0xAB613A67, 0xB831C993, 0x4A5A4A90, 0x9E902E7B, 0x6CFBAD78, 0x7FAB5E8C, 0x8DC0DD8F, 0xE330A81A,
+			0x115B2B19, 0x020BD8ED, 0xF0605BEE, 0x24AA3F05, 0xD6C1BC06, 0xC5914FF2, 0x37FACCF1, 0x69E9F0D5, 0x9B8273D6,
+			0x88D28022, 0x7AB90321, 0xAE7367CA, 0x5C18E4C9, 0x4F48173D, 0xBD23943E, 0xF36E6F75, 0x0105EC76, 0x12551F82,
+			0xE03E9C81, 0x34F4F86A, 0xC69F7B69, 0xD5CF889D, 0x27A40B9E, 0x79B737BA, 0x8BDCB4B9, 0x988C474D, 0x6AE7C44E,
+			0xBE2DA0A5, 0x4C4623A6, 0x5F16D052, 0xAD7D5351
 		};
 
 		/// Calculate CRC32c using software lookup table
@@ -239,276 +236,246 @@ namespace pcpp
 		}
 	}
 
-	// ==================== DATA Chunk Methods ====================
+	// ==================== SctpDataChunkView Implementation ====================
 
-	uint32_t SctpChunk::getDataTsn() const
+	uint32_t SctpDataChunkView::getTsn() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::DATA && type != SctpChunkType::I_DATA)
-			return 0;
-
-		auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Data);
+		auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(dataChunk->tsn);
 	}
 
-	uint16_t SctpChunk::getDataStreamId() const
+	uint16_t SctpDataChunkView::getStreamId() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::DATA && type != SctpChunkType::I_DATA)
-			return 0;
-
-		auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Data);
+		auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(dataChunk->streamId);
 	}
 
-	uint16_t SctpChunk::getDataStreamSequenceNumber() const
+	uint16_t SctpDataChunkView::getSequenceNumber() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::DATA)
-			return 0;
-
-		auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Data);
+		auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(dataChunk->streamSeqNum);
 	}
 
-	uint32_t SctpChunk::getDataPayloadProtocolId() const
+	uint32_t SctpDataChunkView::getPpid() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-
-		SctpChunkType type = getChunkType();
-		if (type == SctpChunkType::DATA)
-		{
-			auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Data);
-			return be32toh(dataChunk->ppid);
-		}
-		else if (type == SctpChunkType::I_DATA)
-		{
-			// For I-DATA, PPID is only valid when B bit is set
-			auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Data);
-			if (idataChunk->flags & SctpDataChunkFlags::BEGIN_FRAGMENT)
-			{
-				return be32toh(idataChunk->ppidOrFsn);
-			}
-		}
-		return 0;
+		auto* dataChunk = reinterpret_cast<const sctp_data_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(dataChunk->ppid);
 	}
 
-	uint8_t* SctpChunk::getDataUserData() const
+	uint8_t* SctpDataChunkView::getUserData() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return nullptr;
-
-		SctpChunkType type = getChunkType();
-		if (type == SctpChunkType::DATA)
-		{
-			return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_data_chunk);
-		}
-		else if (type == SctpChunkType::I_DATA)
-		{
-			return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_idata_chunk);
-		}
-		return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_data_chunk);
 	}
 
-	size_t SctpChunk::getDataUserDataLength() const
+	size_t SctpDataChunkView::getUserDataLength() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-
-		uint16_t len = getLength();
-		SctpChunkType type = getChunkType();
-
-		if (type == SctpChunkType::DATA)
-		{
-			if (len <= sizeof(sctp_data_chunk))
-				return 0;
-			return len - sizeof(sctp_data_chunk);
-		}
-		else if (type == SctpChunkType::I_DATA)
-		{
-			if (len <= sizeof(sctp_idata_chunk))
-				return 0;
-			return len - sizeof(sctp_idata_chunk);
-		}
-		return 0;
-	}
-
-	bool SctpChunk::isDataBeginFragment() const
-	{
-		return isFlagSet(SctpDataChunkFlags::BEGIN_FRAGMENT);
-	}
-
-	bool SctpChunk::isDataEndFragment() const
-	{
-		return isFlagSet(SctpDataChunkFlags::END_FRAGMENT);
-	}
-
-	bool SctpChunk::isDataUnordered() const
-	{
-		return isFlagSet(SctpDataChunkFlags::UNORDERED);
-	}
-
-	bool SctpChunk::isDataImmediate() const
-	{
-		return isFlagSet(SctpDataChunkFlags::IMMEDIATE);
-	}
-
-	// ==================== INIT/INIT-ACK Chunk Methods ====================
-
-	uint32_t SctpChunk::getInitInitiateTag() const
-	{
-		if (m_Data == nullptr)
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_data_chunk))
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::INIT && type != SctpChunkType::INIT_ACK)
-			return 0;
+		return len - sizeof(sctp_data_chunk);
+	}
 
-		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Data);
+	bool SctpDataChunkView::isBeginFragment() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::BEGIN_FRAGMENT);
+	}
+
+	bool SctpDataChunkView::isEndFragment() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::END_FRAGMENT);
+	}
+
+	bool SctpDataChunkView::isUnordered() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::UNORDERED);
+	}
+
+	bool SctpDataChunkView::isImmediate() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::IMMEDIATE);
+	}
+
+	// ==================== SctpInitChunkView Implementation ====================
+
+	uint32_t SctpInitChunkView::getInitiateTag() const
+	{
+		if (!isValid())
+			return 0;
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(initChunk->initiateTag);
 	}
 
-	uint32_t SctpChunk::getInitArwnd() const
+	uint32_t SctpInitChunkView::getArwnd() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::INIT && type != SctpChunkType::INIT_ACK)
-			return 0;
-
-		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Data);
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(initChunk->arwnd);
 	}
 
-	uint16_t SctpChunk::getInitNumOutboundStreams() const
+	uint16_t SctpInitChunkView::getNumOutboundStreams() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::INIT && type != SctpChunkType::INIT_ACK)
-			return 0;
-
-		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Data);
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(initChunk->numOutboundStreams);
 	}
 
-	uint16_t SctpChunk::getInitNumInboundStreams() const
+	uint16_t SctpInitChunkView::getNumInboundStreams() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::INIT && type != SctpChunkType::INIT_ACK)
-			return 0;
-
-		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Data);
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(initChunk->numInboundStreams);
 	}
 
-	uint32_t SctpChunk::getInitInitialTsn() const
+	uint32_t SctpInitChunkView::getInitialTsn() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::INIT && type != SctpChunkType::INIT_ACK)
-			return 0;
-
-		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Data);
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(initChunk->initialTsn);
 	}
 
-	uint8_t* SctpChunk::getInitFirstParameter() const
+	uint8_t* SctpInitChunkView::getFirstParameter() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return nullptr;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::INIT && type != SctpChunkType::INIT_ACK)
-			return nullptr;
-
-		uint16_t len = getLength();
+		uint16_t len = m_Chunk.getLength();
 		if (len <= sizeof(sctp_init_chunk))
 			return nullptr;
-
-		// Parameters start after the fixed INIT header (20 bytes)
-		return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_init_chunk);
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_init_chunk);
 	}
 
-	size_t SctpChunk::getInitParametersLength() const
+	size_t SctpInitChunkView::getParametersLength() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::INIT && type != SctpChunkType::INIT_ACK)
-			return 0;
-
-		uint16_t len = getLength();
+		uint16_t len = m_Chunk.getLength();
 		if (len <= sizeof(sctp_init_chunk))
 			return 0;
-
 		return len - sizeof(sctp_init_chunk);
 	}
 
-	// ==================== SACK Chunk Methods ====================
+	// ==================== SctpInitAckChunkView Implementation ====================
 
-	uint32_t SctpChunk::getSackCumulativeTsnAck() const
+	uint32_t SctpInitAckChunkView::getInitiateTag() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::SACK)
-			return 0;
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(initChunk->initiateTag);
+	}
 
-		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Data);
+	uint32_t SctpInitAckChunkView::getArwnd() const
+	{
+		if (!isValid())
+			return 0;
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(initChunk->arwnd);
+	}
+
+	uint16_t SctpInitAckChunkView::getNumOutboundStreams() const
+	{
+		if (!isValid())
+			return 0;
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
+		return be16toh(initChunk->numOutboundStreams);
+	}
+
+	uint16_t SctpInitAckChunkView::getNumInboundStreams() const
+	{
+		if (!isValid())
+			return 0;
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
+		return be16toh(initChunk->numInboundStreams);
+	}
+
+	uint32_t SctpInitAckChunkView::getInitialTsn() const
+	{
+		if (!isValid())
+			return 0;
+		auto* initChunk = reinterpret_cast<const sctp_init_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(initChunk->initialTsn);
+	}
+
+	uint8_t* SctpInitAckChunkView::getFirstParameter() const
+	{
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_init_chunk))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_init_chunk);
+	}
+
+	size_t SctpInitAckChunkView::getParametersLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_init_chunk))
+			return 0;
+		return len - sizeof(sctp_init_chunk);
+	}
+
+	// ==================== SctpSackChunkView Implementation ====================
+
+	uint32_t SctpSackChunkView::getCumulativeTsnAck() const
+	{
+		if (!isValid())
+			return 0;
+		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(sackChunk->cumulativeTsnAck);
 	}
 
-	uint32_t SctpChunk::getSackArwnd() const
+	uint32_t SctpSackChunkView::getArwnd() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::SACK)
-			return 0;
-
-		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Data);
+		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(sackChunk->arwnd);
 	}
 
-	uint16_t SctpChunk::getSackNumGapBlocks() const
+	uint16_t SctpSackChunkView::getNumGapBlocks() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::SACK)
-			return 0;
-
-		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Data);
+		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(sackChunk->numGapBlocks);
 	}
 
-	uint16_t SctpChunk::getSackNumDupTsns() const
+	uint16_t SctpSackChunkView::getNumDupTsns() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::SACK)
-			return 0;
-
-		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Data);
+		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(sackChunk->numDupTsns);
 	}
 
-	std::vector<sctp_gap_ack_block> SctpChunk::getSackGapBlocks() const
+	std::vector<sctp_gap_ack_block> SctpSackChunkView::getGapBlocks() const
 	{
 		std::vector<sctp_gap_ack_block> result;
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::SACK)
+		if (!isValid())
 			return result;
 
-		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Data);
+		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Chunk.getRecordBasePtr());
 		uint16_t numGapBlocks = be16toh(sackChunk->numGapBlocks);
 
-		const uint8_t* gapBlocksPtr = reinterpret_cast<const uint8_t*>(m_Data) + sizeof(sctp_sack_chunk);
-		size_t availableLen = getLength() - sizeof(sctp_sack_chunk);
+		const uint8_t* gapBlocksPtr = m_Chunk.getRecordBasePtr() + sizeof(sctp_sack_chunk);
+		size_t availableLen = m_Chunk.getLength() - sizeof(sctp_sack_chunk);
 
 		for (uint16_t i = 0; i < numGapBlocks && (i + 1) * sizeof(sctp_gap_ack_block) <= availableLen; ++i)
 		{
@@ -523,19 +490,19 @@ namespace pcpp
 		return result;
 	}
 
-	std::vector<uint32_t> SctpChunk::getSackDupTsns() const
+	std::vector<uint32_t> SctpSackChunkView::getDupTsns() const
 	{
 		std::vector<uint32_t> result;
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::SACK)
+		if (!isValid())
 			return result;
 
-		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Data);
+		auto* sackChunk = reinterpret_cast<const sctp_sack_chunk*>(m_Chunk.getRecordBasePtr());
 		uint16_t numGapBlocks = be16toh(sackChunk->numGapBlocks);
 		uint16_t numDupTsns = be16toh(sackChunk->numDupTsns);
 
 		size_t dupTsnsOffset = sizeof(sctp_sack_chunk) + numGapBlocks * sizeof(sctp_gap_ack_block);
-		const uint8_t* dupTsnsPtr = reinterpret_cast<const uint8_t*>(m_Data) + dupTsnsOffset;
-		size_t availableLen = getLength() - dupTsnsOffset;
+		const uint8_t* dupTsnsPtr = m_Chunk.getRecordBasePtr() + dupTsnsOffset;
+		size_t availableLen = m_Chunk.getLength() - dupTsnsOffset;
 
 		for (uint16_t i = 0; i < numDupTsns && (i + 1) * sizeof(uint32_t) <= availableLen; ++i)
 		{
@@ -546,277 +513,236 @@ namespace pcpp
 		return result;
 	}
 
-	// ==================== SHUTDOWN Chunk Methods ====================
+	// ==================== SctpHeartbeatChunkView Implementation ====================
 
-	uint32_t SctpChunk::getShutdownCumulativeTsnAck() const
+	uint8_t* SctpHeartbeatChunkView::getInfo() const
 	{
-		if (m_Data == nullptr)
-			return 0;
-		if (getChunkType() != SctpChunkType::SHUTDOWN)
-			return 0;
-
-		auto* shutdownChunk = reinterpret_cast<const sctp_shutdown_chunk*>(m_Data);
-		return be32toh(shutdownChunk->cumulativeTsnAck);
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr);
 	}
 
-	// ==================== HEARTBEAT Chunk Methods ====================
-
-	uint8_t* SctpChunk::getHeartbeatInfo() const
+	size_t SctpHeartbeatChunkView::getInfoLength() const
 	{
-		if (m_Data == nullptr)
-			return nullptr;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::HEARTBEAT && type != SctpChunkType::HEARTBEAT_ACK)
-			return nullptr;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_heartbeat_chunk))
-			return nullptr;
-
-		// Heartbeat Info is the value after the chunk header (4 bytes)
-		return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_heartbeat_chunk);
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return 0;
+		return len - sizeof(sctp_chunk_hdr);
 	}
 
-	size_t SctpChunk::getHeartbeatInfoLength() const
+	// ==================== SctpHeartbeatAckChunkView Implementation ====================
+
+	uint8_t* SctpHeartbeatAckChunkView::getInfo() const
 	{
-		if (m_Data == nullptr)
-			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::HEARTBEAT && type != SctpChunkType::HEARTBEAT_ACK)
-			return 0;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_heartbeat_chunk))
-			return 0;
-
-		return len - sizeof(sctp_heartbeat_chunk);
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr);
 	}
 
-	// ==================== COOKIE-ECHO Chunk Methods ====================
-
-	uint8_t* SctpChunk::getCookieEchoData() const
+	size_t SctpHeartbeatAckChunkView::getInfoLength() const
 	{
-		if (m_Data == nullptr)
-			return nullptr;
-		if (getChunkType() != SctpChunkType::COOKIE_ECHO)
-			return nullptr;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_cookie_echo_chunk))
-			return nullptr;
-
-		return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_cookie_echo_chunk);
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return 0;
+		return len - sizeof(sctp_chunk_hdr);
 	}
 
-	size_t SctpChunk::getCookieEchoLength() const
+	// ==================== SctpAbortChunkView Implementation ====================
+
+	bool SctpAbortChunkView::isTBitSet() const
 	{
-		if (m_Data == nullptr)
-			return 0;
-		if (getChunkType() != SctpChunkType::COOKIE_ECHO)
-			return 0;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_cookie_echo_chunk))
-			return 0;
-
-		return len - sizeof(sctp_cookie_echo_chunk);
-	}
-
-	// ==================== ABORT Chunk Methods ====================
-
-	bool SctpChunk::isAbortTBitSet() const
-	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return false;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::ABORT && type != SctpChunkType::SHUTDOWN_COMPLETE)
+		return (m_Chunk.getFlags() & 0x01) != 0;
+	}
+
+	uint8_t* SctpAbortChunkView::getFirstErrorCause() const
+	{
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr);
+	}
+
+	size_t SctpAbortChunkView::getErrorCausesLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return 0;
+		return len - sizeof(sctp_chunk_hdr);
+	}
+
+	// ==================== SctpErrorChunkView Implementation ====================
+
+	uint8_t* SctpErrorChunkView::getFirstCause() const
+	{
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr);
+	}
+
+	size_t SctpErrorChunkView::getCausesLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
+			return 0;
+		return len - sizeof(sctp_chunk_hdr);
+	}
+
+	// ==================== SctpShutdownChunkView Implementation ====================
+
+	uint32_t SctpShutdownChunkView::getCumulativeTsnAck() const
+	{
+		if (!isValid())
+			return 0;
+		// SHUTDOWN chunk has 4-byte header + 4-byte cumulative TSN ack
+		auto* shutdownData = reinterpret_cast<const uint32_t*>(m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr));
+		return be32toh(*shutdownData);
+	}
+
+	// ==================== SctpShutdownCompleteChunkView Implementation ====================
+
+	bool SctpShutdownCompleteChunkView::isTBitSet() const
+	{
+		if (!isValid())
 			return false;
-
-		return (m_Data->flags & SctpAbortFlags::T_BIT) != 0;
+		return (m_Chunk.getFlags() & 0x01) != 0;
 	}
 
-	uint8_t* SctpChunk::getAbortFirstErrorCause() const
+	// ==================== SctpCookieEchoChunkView Implementation ====================
+
+	uint8_t* SctpCookieEchoChunkView::getCookie() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return nullptr;
-		if (getChunkType() != SctpChunkType::ABORT)
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
 			return nullptr;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_abort_chunk))
-			return nullptr;
-
-		return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_abort_chunk);
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr);
 	}
 
-	size_t SctpChunk::getAbortErrorCausesLength() const
+	size_t SctpCookieEchoChunkView::getCookieLength() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::ABORT)
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_chunk_hdr))
 			return 0;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_abort_chunk))
-			return 0;
-
-		return len - sizeof(sctp_abort_chunk);
+		return len - sizeof(sctp_chunk_hdr);
 	}
 
-	// ==================== ERROR Chunk Methods ====================
+	// ==================== SctpEcneChunkView Implementation ====================
 
-	uint8_t* SctpChunk::getErrorFirstCause() const
+	uint32_t SctpEcneChunkView::getLowestTsn() const
 	{
-		if (m_Data == nullptr)
-			return nullptr;
-		if (getChunkType() != SctpChunkType::SCTP_ERROR)
-			return nullptr;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_error_chunk))
-			return nullptr;
-
-		return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_error_chunk);
+		if (!isValid())
+			return 0;
+		// ECNE chunk has 4-byte header + 4-byte lowest TSN
+		auto* ecneData = reinterpret_cast<const uint32_t*>(m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr));
+		return be32toh(*ecneData);
 	}
 
-	size_t SctpChunk::getErrorCausesLength() const
+	// ==================== SctpCwrChunkView Implementation ====================
+
+	uint32_t SctpCwrChunkView::getLowestTsn() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::SCTP_ERROR)
-			return 0;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_error_chunk))
-			return 0;
-
-		return len - sizeof(sctp_error_chunk);
+		// CWR chunk has 4-byte header + 4-byte lowest TSN
+		auto* cwrData = reinterpret_cast<const uint32_t*>(m_Chunk.getRecordBasePtr() + sizeof(sctp_chunk_hdr));
+		return be32toh(*cwrData);
 	}
 
-	// ==================== ECNE/CWR Chunk Methods ====================
+	// ==================== SctpAuthChunkView Implementation ====================
 
-	uint32_t SctpChunk::getEcneLowestTsn() const
+	uint16_t SctpAuthChunkView::getSharedKeyId() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::ECNE)
-			return 0;
-
-		auto* ecneChunk = reinterpret_cast<const sctp_ecne_chunk*>(m_Data);
-		return be32toh(ecneChunk->lowestTsn);
-	}
-
-	uint32_t SctpChunk::getCwrLowestTsn() const
-	{
-		if (m_Data == nullptr)
-			return 0;
-		if (getChunkType() != SctpChunkType::CWR)
-			return 0;
-
-		auto* cwrChunk = reinterpret_cast<const sctp_cwr_chunk*>(m_Data);
-		return be32toh(cwrChunk->lowestTsn);
-	}
-
-	// ==================== AUTH Chunk Methods ====================
-
-	uint16_t SctpChunk::getAuthSharedKeyId() const
-	{
-		if (m_Data == nullptr)
-			return 0;
-		if (getChunkType() != SctpChunkType::AUTH)
-			return 0;
-
-		auto* authChunk = reinterpret_cast<const sctp_auth_chunk*>(m_Data);
+		auto* authChunk = reinterpret_cast<const sctp_auth_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(authChunk->sharedKeyId);
 	}
 
-	uint16_t SctpChunk::getAuthHmacId() const
+	uint16_t SctpAuthChunkView::getHmacId() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::AUTH)
-			return 0;
-
-		auto* authChunk = reinterpret_cast<const sctp_auth_chunk*>(m_Data);
+		auto* authChunk = reinterpret_cast<const sctp_auth_chunk*>(m_Chunk.getRecordBasePtr());
 		return be16toh(authChunk->hmacId);
 	}
 
-	uint8_t* SctpChunk::getAuthHmacData() const
+	uint8_t* SctpAuthChunkView::getHmacData() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return nullptr;
-		if (getChunkType() != SctpChunkType::AUTH)
-			return nullptr;
-
-		uint16_t len = getLength();
+		uint16_t len = m_Chunk.getLength();
 		if (len <= sizeof(sctp_auth_chunk))
 			return nullptr;
-
-		// HMAC data follows the AUTH chunk header (8 bytes)
-		return reinterpret_cast<uint8_t*>(m_Data) + sizeof(sctp_auth_chunk);
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_auth_chunk);
 	}
 
-	size_t SctpChunk::getAuthHmacLength() const
+	size_t SctpAuthChunkView::getHmacLength() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::AUTH)
-			return 0;
-
-		uint16_t len = getLength();
+		uint16_t len = m_Chunk.getLength();
 		if (len <= sizeof(sctp_auth_chunk))
 			return 0;
-
 		return len - sizeof(sctp_auth_chunk);
 	}
 
-	// ==================== FORWARD-TSN Chunk Methods ====================
+	// ==================== SctpForwardTsnChunkView Implementation ====================
 
-	uint32_t SctpChunk::getForwardTsnNewCumulativeTsn() const
+	uint32_t SctpForwardTsnChunkView::getNewCumulativeTsn() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::FORWARD_TSN && type != SctpChunkType::I_FORWARD_TSN)
-			return 0;
-
-		auto* fwdTsnChunk = reinterpret_cast<const sctp_forward_tsn_chunk*>(m_Data);
-		return be32toh(fwdTsnChunk->newCumulativeTsn);
+		auto* fwdChunk = reinterpret_cast<const sctp_forward_tsn_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(fwdChunk->newCumulativeTsn);
 	}
 
-	size_t SctpChunk::getForwardTsnStreamCount() const
+	size_t SctpForwardTsnChunkView::getStreamCount() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::FORWARD_TSN)
-			return 0;
-
-		uint16_t len = getLength();
+		uint16_t len = m_Chunk.getLength();
 		if (len <= sizeof(sctp_forward_tsn_chunk))
 			return 0;
-
-		// Per RFC 3758, stream entries are 4 bytes each (stream ID + stream sequence)
-		size_t entriesSize = len - sizeof(sctp_forward_tsn_chunk);
-		return entriesSize / sizeof(sctp_forward_tsn_stream);
+		return (len - sizeof(sctp_forward_tsn_chunk)) / sizeof(sctp_forward_tsn_stream);
 	}
 
-	std::vector<sctp_forward_tsn_stream> SctpChunk::getForwardTsnStreams() const
+	std::vector<sctp_forward_tsn_stream> SctpForwardTsnChunkView::getStreams() const
 	{
 		std::vector<sctp_forward_tsn_stream> result;
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::FORWARD_TSN)
+		if (!isValid())
 			return result;
 
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_forward_tsn_chunk))
-			return result;
+		size_t count = getStreamCount();
+		const uint8_t* streamPtr = m_Chunk.getRecordBasePtr() + sizeof(sctp_forward_tsn_chunk);
 
-		size_t numEntries = getForwardTsnStreamCount();
-		const uint8_t* streamsPtr = reinterpret_cast<const uint8_t*>(m_Data) + sizeof(sctp_forward_tsn_chunk);
-
-		for (size_t i = 0; i < numEntries; ++i)
+		for (size_t i = 0; i < count; ++i)
 		{
 			const auto* entry =
-			    reinterpret_cast<const sctp_forward_tsn_stream*>(streamsPtr + i * sizeof(sctp_forward_tsn_stream));
+			    reinterpret_cast<const sctp_forward_tsn_stream*>(streamPtr + i * sizeof(sctp_forward_tsn_stream));
 			sctp_forward_tsn_stream stream;
 			stream.streamId = be16toh(entry->streamId);
 			stream.streamSeq = be16toh(entry->streamSeq);
@@ -826,84 +752,353 @@ namespace pcpp
 		return result;
 	}
 
-	// ==================== ASCONF/ASCONF-ACK Chunk Methods ====================
+	// ==================== SctpIDataChunkView Implementation ====================
 
-	uint32_t SctpChunk::getAsconfSerialNumber() const
+	uint32_t SctpIDataChunkView::getTsn() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		SctpChunkType type = getChunkType();
-		if (type != SctpChunkType::ASCONF && type != SctpChunkType::ASCONF_ACK)
-			return 0;
-
-		auto* asconfChunk = reinterpret_cast<const sctp_asconf_chunk*>(m_Data);
-		return be32toh(asconfChunk->serialNumber);
+		auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(idataChunk->tsn);
 	}
 
-	// ==================== I-DATA Chunk Methods ====================
-
-	uint32_t SctpChunk::getIDataMessageId() const
+	uint16_t SctpIDataChunkView::getStreamId() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::I_DATA)
-			return 0;
+		auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Chunk.getRecordBasePtr());
+		return be16toh(idataChunk->streamId);
+	}
 
-		auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Data);
+	uint16_t SctpIDataChunkView::getReserved() const
+	{
+		if (!isValid())
+			return 0;
+		auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Chunk.getRecordBasePtr());
+		return be16toh(idataChunk->reserved);
+	}
+
+	uint32_t SctpIDataChunkView::getMessageId() const
+	{
+		if (!isValid())
+			return 0;
+		auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(idataChunk->mid);
 	}
 
-	uint32_t SctpChunk::getIDataPpidOrFsn() const
+	uint32_t SctpIDataChunkView::getPpidOrFsn() const
 	{
-		if (m_Data == nullptr)
+		if (!isValid())
 			return 0;
-		if (getChunkType() != SctpChunkType::I_DATA)
-			return 0;
-
-		auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Data);
+		auto* idataChunk = reinterpret_cast<const sctp_idata_chunk*>(m_Chunk.getRecordBasePtr());
 		return be32toh(idataChunk->ppidOrFsn);
 	}
 
-	// ==================== I-FORWARD-TSN Chunk Methods ====================
-
-	size_t SctpChunk::getIForwardTsnStreamCount() const
+	uint8_t* SctpIDataChunkView::getUserData() const
 	{
-		if (m_Data == nullptr)
-			return 0;
-		if (getChunkType() != SctpChunkType::I_FORWARD_TSN)
-			return 0;
-
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_iforward_tsn_chunk))
-			return 0;
-
-		// Per RFC 8260, stream entries are 8 bytes each (stream ID + reserved + MID)
-		size_t entriesSize = len - sizeof(sctp_iforward_tsn_chunk);
-		return entriesSize / sizeof(sctp_iforward_tsn_stream);
+		if (!isValid())
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_idata_chunk);
 	}
 
-	std::vector<sctp_iforward_tsn_stream> SctpChunk::getIForwardTsnStreams() const
+	size_t SctpIDataChunkView::getUserDataLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_idata_chunk))
+			return 0;
+		return len - sizeof(sctp_idata_chunk);
+	}
+
+	bool SctpIDataChunkView::isBeginFragment() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::BEGIN_FRAGMENT);
+	}
+
+	bool SctpIDataChunkView::isEndFragment() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::END_FRAGMENT);
+	}
+
+	bool SctpIDataChunkView::isUnordered() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::UNORDERED);
+	}
+
+	bool SctpIDataChunkView::isImmediate() const
+	{
+		return m_Chunk.isFlagSet(SctpDataChunkFlags::IMMEDIATE);
+	}
+
+	// ==================== SctpIForwardTsnChunkView Implementation ====================
+
+	uint32_t SctpIForwardTsnChunkView::getNewCumulativeTsn() const
+	{
+		if (!isValid())
+			return 0;
+		auto* ifwdChunk = reinterpret_cast<const sctp_iforward_tsn_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(ifwdChunk->newCumulativeTsn);
+	}
+
+	size_t SctpIForwardTsnChunkView::getStreamCount() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_iforward_tsn_chunk))
+			return 0;
+		return (len - sizeof(sctp_iforward_tsn_chunk)) / sizeof(sctp_iforward_tsn_stream);
+	}
+
+	std::vector<sctp_iforward_tsn_stream> SctpIForwardTsnChunkView::getStreams() const
 	{
 		std::vector<sctp_iforward_tsn_stream> result;
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::I_FORWARD_TSN)
+		if (!isValid())
 			return result;
 
-		uint16_t len = getLength();
-		if (len <= sizeof(sctp_iforward_tsn_chunk))
-			return result;
+		size_t count = getStreamCount();
+		const uint8_t* streamPtr = m_Chunk.getRecordBasePtr() + sizeof(sctp_iforward_tsn_chunk);
 
-		size_t numEntries = getIForwardTsnStreamCount();
-		const uint8_t* streamsPtr = reinterpret_cast<const uint8_t*>(m_Data) + sizeof(sctp_iforward_tsn_chunk);
-
-		for (size_t i = 0; i < numEntries; ++i)
+		for (size_t i = 0; i < count; ++i)
 		{
 			const auto* entry =
-			    reinterpret_cast<const sctp_iforward_tsn_stream*>(streamsPtr + i * sizeof(sctp_iforward_tsn_stream));
+			    reinterpret_cast<const sctp_iforward_tsn_stream*>(streamPtr + i * sizeof(sctp_iforward_tsn_stream));
 			sctp_iforward_tsn_stream stream;
 			stream.streamId = be16toh(entry->streamId);
 			stream.reserved = be16toh(entry->reserved);
 			stream.mid = be32toh(entry->mid);
 			result.push_back(stream);
+		}
+
+		return result;
+	}
+
+	// ==================== SctpAsconfChunkView Implementation ====================
+
+	uint32_t SctpAsconfChunkView::getSerialNumber() const
+	{
+		if (!isValid())
+			return 0;
+		auto* asconfChunk = reinterpret_cast<const sctp_asconf_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(asconfChunk->serialNumber);
+	}
+
+	uint8_t* SctpAsconfChunkView::getFirstParameter() const
+	{
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_asconf_chunk))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_asconf_chunk);
+	}
+
+	size_t SctpAsconfChunkView::getParametersLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_asconf_chunk))
+			return 0;
+		return len - sizeof(sctp_asconf_chunk);
+	}
+
+	// ==================== SctpAsconfAckChunkView Implementation ====================
+
+	uint32_t SctpAsconfAckChunkView::getSerialNumber() const
+	{
+		if (!isValid())
+			return 0;
+		auto* asconfAckChunk = reinterpret_cast<const sctp_asconf_ack_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(asconfAckChunk->serialNumber);
+	}
+
+	uint8_t* SctpAsconfAckChunkView::getFirstParameter() const
+	{
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_asconf_ack_chunk))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_asconf_ack_chunk);
+	}
+
+	size_t SctpAsconfAckChunkView::getParametersLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_asconf_ack_chunk))
+			return 0;
+		return len - sizeof(sctp_asconf_ack_chunk);
+	}
+
+	// ==================== SctpReconfigChunkView Implementation ====================
+
+	uint8_t* SctpReconfigChunkView::getFirstParameter() const
+	{
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_reconfig_chunk))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_reconfig_chunk);
+	}
+
+	size_t SctpReconfigChunkView::getParametersLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_reconfig_chunk))
+			return 0;
+		return len - sizeof(sctp_reconfig_chunk);
+	}
+
+	// ==================== SctpPadChunkView Implementation ====================
+
+	uint8_t* SctpPadChunkView::getPaddingData() const
+	{
+		if (!isValid())
+			return nullptr;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_pad_chunk))
+			return nullptr;
+		return m_Chunk.getRecordBasePtr() + sizeof(sctp_pad_chunk);
+	}
+
+	size_t SctpPadChunkView::getPaddingLength() const
+	{
+		if (!isValid())
+			return 0;
+		uint16_t len = m_Chunk.getLength();
+		if (len <= sizeof(sctp_pad_chunk))
+			return 0;
+		return len - sizeof(sctp_pad_chunk);
+	}
+
+	// ==================== SctpNrSackChunkView Implementation ====================
+
+	uint32_t SctpNrSackChunkView::getCumulativeTsnAck() const
+	{
+		if (!isValid())
+			return 0;
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(nrsackChunk->cumulativeTsnAck);
+	}
+
+	uint32_t SctpNrSackChunkView::getArwnd() const
+	{
+		if (!isValid())
+			return 0;
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		return be32toh(nrsackChunk->arwnd);
+	}
+
+	uint16_t SctpNrSackChunkView::getNumGapBlocks() const
+	{
+		if (!isValid())
+			return 0;
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		return be16toh(nrsackChunk->numGapBlocks);
+	}
+
+	uint16_t SctpNrSackChunkView::getNumNrGapBlocks() const
+	{
+		if (!isValid())
+			return 0;
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		return be16toh(nrsackChunk->numNrGapBlocks);
+	}
+
+	uint16_t SctpNrSackChunkView::getNumDupTsns() const
+	{
+		if (!isValid())
+			return 0;
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		return be16toh(nrsackChunk->numDupTsns);
+	}
+
+	bool SctpNrSackChunkView::isAllNonRenegable() const
+	{
+		if (!isValid())
+			return false;
+		return (getFlags() & SctpNrSackFlags::ALL_NON_RENEGABLE) != 0;
+	}
+
+	std::vector<sctp_gap_ack_block> SctpNrSackChunkView::getGapBlocks() const
+	{
+		std::vector<sctp_gap_ack_block> result;
+		if (!isValid())
+			return result;
+
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		uint16_t numGapBlocks = be16toh(nrsackChunk->numGapBlocks);
+
+		const uint8_t* gapBlocksPtr = m_Chunk.getRecordBasePtr() + sizeof(sctp_nr_sack_chunk);
+		size_t availableLen = m_Chunk.getLength() - sizeof(sctp_nr_sack_chunk);
+
+		for (uint16_t i = 0; i < numGapBlocks && (i + 1) * sizeof(sctp_gap_ack_block) <= availableLen; ++i)
+		{
+			const auto* block =
+			    reinterpret_cast<const sctp_gap_ack_block*>(gapBlocksPtr + i * sizeof(sctp_gap_ack_block));
+			sctp_gap_ack_block gapBlock;
+			gapBlock.start = be16toh(block->start);
+			gapBlock.end = be16toh(block->end);
+			result.push_back(gapBlock);
+		}
+
+		return result;
+	}
+
+	std::vector<sctp_gap_ack_block> SctpNrSackChunkView::getNrGapBlocks() const
+	{
+		std::vector<sctp_gap_ack_block> result;
+		if (!isValid())
+			return result;
+
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		uint16_t numGapBlocks = be16toh(nrsackChunk->numGapBlocks);
+		uint16_t numNrGapBlocks = be16toh(nrsackChunk->numNrGapBlocks);
+
+		size_t nrGapBlocksOffset = sizeof(sctp_nr_sack_chunk) + numGapBlocks * sizeof(sctp_gap_ack_block);
+		const uint8_t* nrGapBlocksPtr = m_Chunk.getRecordBasePtr() + nrGapBlocksOffset;
+		size_t availableLen = m_Chunk.getLength() - nrGapBlocksOffset;
+
+		for (uint16_t i = 0; i < numNrGapBlocks && (i + 1) * sizeof(sctp_gap_ack_block) <= availableLen; ++i)
+		{
+			const auto* block =
+			    reinterpret_cast<const sctp_gap_ack_block*>(nrGapBlocksPtr + i * sizeof(sctp_gap_ack_block));
+			sctp_gap_ack_block gapBlock;
+			gapBlock.start = be16toh(block->start);
+			gapBlock.end = be16toh(block->end);
+			result.push_back(gapBlock);
+		}
+
+		return result;
+	}
+
+	std::vector<uint32_t> SctpNrSackChunkView::getDupTsns() const
+	{
+		std::vector<uint32_t> result;
+		if (!isValid())
+			return result;
+
+		auto* nrsackChunk = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Chunk.getRecordBasePtr());
+		uint16_t numGapBlocks = be16toh(nrsackChunk->numGapBlocks);
+		uint16_t numNrGapBlocks = be16toh(nrsackChunk->numNrGapBlocks);
+		uint16_t numDupTsns = be16toh(nrsackChunk->numDupTsns);
+
+		size_t dupTsnsOffset = sizeof(sctp_nr_sack_chunk) + numGapBlocks * sizeof(sctp_gap_ack_block) +
+		                       numNrGapBlocks * sizeof(sctp_gap_ack_block);
+		const uint8_t* dupTsnsPtr = m_Chunk.getRecordBasePtr() + dupTsnsOffset;
+		size_t availableLen = m_Chunk.getLength() - dupTsnsOffset;
+
+		for (uint16_t i = 0; i < numDupTsns && (i + 1) * sizeof(uint32_t) <= availableLen; ++i)
+		{
+			const auto* tsn = reinterpret_cast<const uint32_t*>(dupTsnsPtr + i * sizeof(uint32_t));
+			result.push_back(be32toh(*tsn));
 		}
 
 		return result;
@@ -1194,8 +1389,7 @@ namespace pcpp
 	}
 
 	bool SctpLayer::addDataChunk(uint32_t tsn, uint16_t streamId, uint16_t streamSeq, uint32_t ppid,
-	                             const uint8_t* userData, size_t userDataLen,
-	                             bool beginFragment, bool endFragment,
+	                             const uint8_t* userData, size_t userDataLen, bool beginFragment, bool endFragment,
 	                             bool unordered, bool immediate)
 	{
 		if (userData == nullptr && userDataLen > 0)
@@ -1229,10 +1423,9 @@ namespace pcpp
 		return addChunk(chunkData.data(), chunkLen);
 	}
 
-	bool SctpLayer::addInitChunk(uint32_t initiateTag, uint32_t arwnd,
-	                             uint16_t numOutboundStreams, uint16_t numInboundStreams,
-	                             uint32_t initialTsn,
-	                             const uint8_t* parameters, size_t parametersLen)
+	bool SctpLayer::addInitChunk(uint32_t initiateTag, uint32_t arwnd, uint16_t numOutboundStreams,
+	                             uint16_t numInboundStreams, uint32_t initialTsn, const uint8_t* parameters,
+	                             size_t parametersLen)
 	{
 		size_t chunkLen = sizeof(sctp_init_chunk) + parametersLen;
 		std::vector<uint8_t> chunkData(chunkLen);
@@ -1255,10 +1448,9 @@ namespace pcpp
 		return addChunk(chunkData.data(), chunkLen);
 	}
 
-	bool SctpLayer::addInitAckChunk(uint32_t initiateTag, uint32_t arwnd,
-	                                uint16_t numOutboundStreams, uint16_t numInboundStreams,
-	                                uint32_t initialTsn,
-	                                const uint8_t* parameters, size_t parametersLen)
+	bool SctpLayer::addInitAckChunk(uint32_t initiateTag, uint32_t arwnd, uint16_t numOutboundStreams,
+	                                uint16_t numInboundStreams, uint32_t initialTsn, const uint8_t* parameters,
+	                                size_t parametersLen)
 	{
 		size_t chunkLen = sizeof(sctp_init_chunk) + parametersLen;
 		std::vector<uint8_t> chunkData(chunkLen);
@@ -1282,12 +1474,10 @@ namespace pcpp
 	}
 
 	bool SctpLayer::addSackChunk(uint32_t cumulativeTsnAck, uint32_t arwnd,
-	                             const std::vector<sctp_gap_ack_block>& gapBlocks,
-	                             const std::vector<uint32_t>& dupTsns)
+	                             const std::vector<sctp_gap_ack_block>& gapBlocks, const std::vector<uint32_t>& dupTsns)
 	{
-		size_t chunkLen = sizeof(sctp_sack_chunk) +
-		                  gapBlocks.size() * sizeof(sctp_gap_ack_block) +
-		                  dupTsns.size() * sizeof(uint32_t);
+		size_t chunkLen =
+		    sizeof(sctp_sack_chunk) + gapBlocks.size() * sizeof(sctp_gap_ack_block) + dupTsns.size() * sizeof(uint32_t);
 		std::vector<uint8_t> chunkData(chunkLen);
 
 		auto* sackChunk = reinterpret_cast<sctp_sack_chunk*>(chunkData.data());
@@ -2004,8 +2194,7 @@ namespace pcpp
 		return addChunk(reinterpret_cast<uint8_t*>(&cwrChunk), sizeof(cwrChunk));
 	}
 
-	bool SctpLayer::addForwardTsnChunk(uint32_t newCumulativeTsn,
-	                                   const std::vector<sctp_forward_tsn_stream>& streams)
+	bool SctpLayer::addForwardTsnChunk(uint32_t newCumulativeTsn, const std::vector<sctp_forward_tsn_stream>& streams)
 	{
 		size_t chunkLen = sizeof(sctp_forward_tsn_chunk) + streams.size() * sizeof(sctp_forward_tsn_stream);
 		std::vector<uint8_t> chunkData(chunkLen);
@@ -2016,8 +2205,8 @@ namespace pcpp
 		fwdTsnChunk->length = htobe16(static_cast<uint16_t>(chunkLen));
 		fwdTsnChunk->newCumulativeTsn = htobe32(newCumulativeTsn);
 
-		auto* streamsPtr = reinterpret_cast<sctp_forward_tsn_stream*>(
-		    chunkData.data() + sizeof(sctp_forward_tsn_chunk));
+		auto* streamsPtr =
+		    reinterpret_cast<sctp_forward_tsn_stream*>(chunkData.data() + sizeof(sctp_forward_tsn_chunk));
 		for (size_t i = 0; i < streams.size(); ++i)
 		{
 			streamsPtr[i].streamId = htobe16(streams[i].streamId);
@@ -2028,8 +2217,7 @@ namespace pcpp
 	}
 
 	bool SctpLayer::addIDataChunk(uint32_t tsn, uint16_t streamId, uint32_t mid, uint32_t ppidOrFsn,
-	                              const uint8_t* userData, size_t userDataLen,
-	                              bool beginFragment, bool endFragment,
+	                              const uint8_t* userData, size_t userDataLen, bool beginFragment, bool endFragment,
 	                              bool unordered, bool immediate)
 	{
 		if (userData == nullptr && userDataLen > 0)
@@ -2064,8 +2252,7 @@ namespace pcpp
 		return addChunk(chunkData.data(), chunkLen);
 	}
 
-	bool SctpLayer::addIForwardTsnChunk(uint32_t newCumulativeTsn,
-	                                    const std::vector<sctp_iforward_tsn_stream>& streams)
+	bool SctpLayer::addIForwardTsnChunk(uint32_t newCumulativeTsn, const std::vector<sctp_iforward_tsn_stream>& streams)
 	{
 		size_t chunkLen = sizeof(sctp_iforward_tsn_chunk) + streams.size() * sizeof(sctp_iforward_tsn_stream);
 		std::vector<uint8_t> chunkData(chunkLen);
@@ -2076,8 +2263,8 @@ namespace pcpp
 		ifwdTsnChunk->length = htobe16(static_cast<uint16_t>(chunkLen));
 		ifwdTsnChunk->newCumulativeTsn = htobe32(newCumulativeTsn);
 
-		auto* streamsPtr = reinterpret_cast<sctp_iforward_tsn_stream*>(
-		    chunkData.data() + sizeof(sctp_iforward_tsn_chunk));
+		auto* streamsPtr =
+		    reinterpret_cast<sctp_iforward_tsn_stream*>(chunkData.data() + sizeof(sctp_iforward_tsn_chunk));
 		for (size_t i = 0; i < streams.size(); ++i)
 		{
 			streamsPtr[i].streamId = htobe16(streams[i].streamId);
@@ -2159,8 +2346,7 @@ namespace pcpp
 			SctpChunkType existingType = chunk.getChunkType();
 
 			// Cannot add anything to a packet with INIT, INIT-ACK, or SHUTDOWN-COMPLETE
-			if (existingType == SctpChunkType::INIT ||
-			    existingType == SctpChunkType::INIT_ACK ||
+			if (existingType == SctpChunkType::INIT || existingType == SctpChunkType::INIT_ACK ||
 			    existingType == SctpChunkType::SHUTDOWN_COMPLETE)
 			{
 				return false;
@@ -2170,8 +2356,7 @@ namespace pcpp
 		}
 
 		// Cannot add INIT, INIT-ACK, or SHUTDOWN-COMPLETE to a packet with existing chunks
-		if (chunkType == SctpChunkType::INIT ||
-		    chunkType == SctpChunkType::INIT_ACK ||
+		if (chunkType == SctpChunkType::INIT || chunkType == SctpChunkType::INIT_ACK ||
 		    chunkType == SctpChunkType::SHUTDOWN_COMPLETE)
 		{
 			return false;
@@ -2248,8 +2433,7 @@ namespace pcpp
 		// Copy ASCONF parameters if provided
 		if (asconfParamsLen > 0 && asconfParams != nullptr)
 		{
-			std::memcpy(chunkData.data() + sizeof(sctp_asconf_chunk) + addressParamLen,
-			            asconfParams, asconfParamsLen);
+			std::memcpy(chunkData.data() + sizeof(sctp_asconf_chunk) + addressParamLen, asconfParams, asconfParamsLen);
 		}
 
 		return addChunk(chunkData.data(), chunkLen);
@@ -2505,8 +2689,7 @@ namespace pcpp
 
 		size_t streamBytesLen = len - headerSize;
 		size_t numStreams = streamBytesLen / 2;
-		auto* streamPtr = reinterpret_cast<const uint16_t*>(
-		    reinterpret_cast<const uint8_t*>(m_Data) + headerSize);
+		auto* streamPtr = reinterpret_cast<const uint16_t*>(reinterpret_cast<const uint8_t*>(m_Data) + headerSize);
 
 		for (size_t i = 0; i < numStreams; ++i)
 		{
@@ -2570,8 +2753,8 @@ namespace pcpp
 			return 0;
 		auto* resp = reinterpret_cast<const sctp_reconfig_response*>(m_Data);
 		// Sender's Next TSN is right after the base structure
-		auto* senderTsn = reinterpret_cast<const uint32_t*>(
-		    reinterpret_cast<const uint8_t*>(resp) + sizeof(sctp_reconfig_response));
+		auto* senderTsn =
+		    reinterpret_cast<const uint32_t*>(reinterpret_cast<const uint8_t*>(resp) + sizeof(sctp_reconfig_response));
 		return be32toh(*senderTsn);
 	}
 
@@ -2581,17 +2764,16 @@ namespace pcpp
 			return 0;
 		auto* resp = reinterpret_cast<const sctp_reconfig_response*>(m_Data);
 		// Receiver's Next TSN is after sender's TSN
-		auto* receiverTsn = reinterpret_cast<const uint32_t*>(
-		    reinterpret_cast<const uint8_t*>(resp) + sizeof(sctp_reconfig_response) + 4);
+		auto* receiverTsn = reinterpret_cast<const uint32_t*>(reinterpret_cast<const uint8_t*>(resp) +
+		                                                      sizeof(sctp_reconfig_response) + 4);
 		return be32toh(*receiverTsn);
 	}
 
 	uint32_t SctpReconfigParameter::getAddStreamsReqSeqNum() const
 	{
 		SctpParameterType type = getType();
-		if (m_Data == nullptr ||
-		    (type != SctpParameterType::ADD_OUTGOING_STREAMS_REQ &&
-		     type != SctpParameterType::ADD_INCOMING_STREAMS_REQ))
+		if (m_Data == nullptr || (type != SctpParameterType::ADD_OUTGOING_STREAMS_REQ &&
+		                          type != SctpParameterType::ADD_INCOMING_STREAMS_REQ))
 			return 0;
 		if (getLength() < sizeof(sctp_add_streams_req))
 			return 0;
@@ -2602,9 +2784,8 @@ namespace pcpp
 	uint16_t SctpReconfigParameter::getAddStreamsCount() const
 	{
 		SctpParameterType type = getType();
-		if (m_Data == nullptr ||
-		    (type != SctpParameterType::ADD_OUTGOING_STREAMS_REQ &&
-		     type != SctpParameterType::ADD_INCOMING_STREAMS_REQ))
+		if (m_Data == nullptr || (type != SctpParameterType::ADD_OUTGOING_STREAMS_REQ &&
+		                          type != SctpParameterType::ADD_INCOMING_STREAMS_REQ))
 			return 0;
 		if (getLength() < sizeof(sctp_add_streams_req))
 			return 0;
@@ -2744,8 +2925,7 @@ namespace pcpp
 	{
 		SctpParameterType type = getType();
 		if (m_Data == nullptr ||
-		    (type != SctpParameterType::ADD_IP_ADDRESS &&
-		     type != SctpParameterType::DELETE_IP_ADDRESS &&
+		    (type != SctpParameterType::ADD_IP_ADDRESS && type != SctpParameterType::DELETE_IP_ADDRESS &&
 		     type != SctpParameterType::SET_PRIMARY_ADDRESS))
 			return 0;
 		if (getLength() < sizeof(sctp_asconf_param))
@@ -2758,8 +2938,7 @@ namespace pcpp
 	{
 		SctpParameterType type = getType();
 		if (m_Data == nullptr ||
-		    (type != SctpParameterType::ADD_IP_ADDRESS &&
-		     type != SctpParameterType::DELETE_IP_ADDRESS &&
+		    (type != SctpParameterType::ADD_IP_ADDRESS && type != SctpParameterType::DELETE_IP_ADDRESS &&
 		     type != SctpParameterType::SET_PRIMARY_ADDRESS))
 			return nullptr;
 		if (getLength() <= sizeof(sctp_asconf_param))
@@ -2771,8 +2950,7 @@ namespace pcpp
 	{
 		SctpParameterType type = getType();
 		if (m_Data == nullptr ||
-		    (type != SctpParameterType::ADD_IP_ADDRESS &&
-		     type != SctpParameterType::DELETE_IP_ADDRESS &&
+		    (type != SctpParameterType::ADD_IP_ADDRESS && type != SctpParameterType::DELETE_IP_ADDRESS &&
 		     type != SctpParameterType::SET_PRIMARY_ADDRESS))
 			return 0;
 		uint16_t len = getLength();
@@ -2819,8 +2997,7 @@ namespace pcpp
 	{
 		SctpParameterType type = getType();
 		if (m_Data == nullptr ||
-		    (type != SctpParameterType::ERROR_CAUSE_INDICATION &&
-		     type != SctpParameterType::SUCCESS_INDICATION))
+		    (type != SctpParameterType::ERROR_CAUSE_INDICATION && type != SctpParameterType::SUCCESS_INDICATION))
 			return 0;
 		if (getLength() < sizeof(sctp_asconf_response))
 			return 0;
@@ -2879,8 +3056,7 @@ namespace pcpp
 			return;
 
 		uint16_t chunkLen = chunk.getLength();
-		size_t headerSize = (type == SctpChunkType::ASCONF) ?
-		                    sizeof(sctp_asconf_chunk) : sizeof(sctp_asconf_ack_chunk);
+		size_t headerSize = (type == SctpChunkType::ASCONF) ? sizeof(sctp_asconf_chunk) : sizeof(sctp_asconf_ack_chunk);
 
 		if (chunkLen <= headerSize)
 			return;
@@ -2952,162 +3128,15 @@ namespace pcpp
 		m_CurrentOffset = m_InitialOffset;
 	}
 
-	// ==================== NR-SACK Chunk Methods ====================
-
-	uint32_t SctpChunk::getNrSackCumulativeTsnAck() const
-	{
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return 0;
-		if (getLength() < sizeof(sctp_nr_sack_chunk))
-			return 0;
-		auto* nrSack = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Data);
-		return be32toh(nrSack->cumulativeTsnAck);
-	}
-
-	uint32_t SctpChunk::getNrSackArwnd() const
-	{
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return 0;
-		if (getLength() < sizeof(sctp_nr_sack_chunk))
-			return 0;
-		auto* nrSack = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Data);
-		return be32toh(nrSack->arwnd);
-	}
-
-	uint16_t SctpChunk::getNrSackNumGapBlocks() const
-	{
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return 0;
-		if (getLength() < sizeof(sctp_nr_sack_chunk))
-			return 0;
-		auto* nrSack = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Data);
-		return be16toh(nrSack->numGapBlocks);
-	}
-
-	uint16_t SctpChunk::getNrSackNumNrGapBlocks() const
-	{
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return 0;
-		if (getLength() < sizeof(sctp_nr_sack_chunk))
-			return 0;
-		auto* nrSack = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Data);
-		return be16toh(nrSack->numNrGapBlocks);
-	}
-
-	uint16_t SctpChunk::getNrSackNumDupTsns() const
-	{
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return 0;
-		if (getLength() < sizeof(sctp_nr_sack_chunk))
-			return 0;
-		auto* nrSack = reinterpret_cast<const sctp_nr_sack_chunk*>(m_Data);
-		return be16toh(nrSack->numDupTsns);
-	}
-
-	bool SctpChunk::isNrSackAllNonRenegable() const
-	{
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return false;
-		return (getFlags() & SctpNrSackFlags::ALL_NON_RENEGABLE) != 0;
-	}
-
-	std::vector<sctp_gap_ack_block> SctpChunk::getNrSackGapBlocks() const
-	{
-		std::vector<sctp_gap_ack_block> result;
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return result;
-
-		uint16_t numBlocks = getNrSackNumGapBlocks();
-		if (numBlocks == 0)
-			return result;
-
-		size_t blockOffset = sizeof(sctp_nr_sack_chunk);
-		size_t chunkLen = getLength();
-
-		for (uint16_t i = 0; i < numBlocks && blockOffset + sizeof(sctp_gap_ack_block) <= chunkLen; ++i)
-		{
-			auto* block = reinterpret_cast<const sctp_gap_ack_block*>(
-			    reinterpret_cast<const uint8_t*>(m_Data) + blockOffset);
-			sctp_gap_ack_block hostBlock;
-			hostBlock.start = be16toh(block->start);
-			hostBlock.end = be16toh(block->end);
-			result.push_back(hostBlock);
-			blockOffset += sizeof(sctp_gap_ack_block);
-		}
-
-		return result;
-	}
-
-	std::vector<sctp_gap_ack_block> SctpChunk::getNrSackNrGapBlocks() const
-	{
-		std::vector<sctp_gap_ack_block> result;
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return result;
-
-		uint16_t numGapBlocks = getNrSackNumGapBlocks();
-		uint16_t numNrBlocks = getNrSackNumNrGapBlocks();
-		if (numNrBlocks == 0)
-			return result;
-
-		// NR Gap Blocks come after Gap Blocks
-		size_t blockOffset = sizeof(sctp_nr_sack_chunk) + (numGapBlocks * sizeof(sctp_gap_ack_block));
-		size_t chunkLen = getLength();
-
-		for (uint16_t i = 0; i < numNrBlocks && blockOffset + sizeof(sctp_gap_ack_block) <= chunkLen; ++i)
-		{
-			auto* block = reinterpret_cast<const sctp_gap_ack_block*>(
-			    reinterpret_cast<const uint8_t*>(m_Data) + blockOffset);
-			sctp_gap_ack_block hostBlock;
-			hostBlock.start = be16toh(block->start);
-			hostBlock.end = be16toh(block->end);
-			result.push_back(hostBlock);
-			blockOffset += sizeof(sctp_gap_ack_block);
-		}
-
-		return result;
-	}
-
-	std::vector<uint32_t> SctpChunk::getNrSackDupTsns() const
-	{
-		std::vector<uint32_t> result;
-		if (m_Data == nullptr || getChunkType() != SctpChunkType::NR_SACK)
-			return result;
-
-		uint16_t numGapBlocks = getNrSackNumGapBlocks();
-		uint16_t numNrBlocks = getNrSackNumNrGapBlocks();
-		uint16_t numDups = getNrSackNumDupTsns();
-		if (numDups == 0)
-			return result;
-
-		// Dup TSNs come after Gap Blocks and NR Gap Blocks
-		size_t tsnOffset = sizeof(sctp_nr_sack_chunk) +
-		                   (numGapBlocks * sizeof(sctp_gap_ack_block)) +
-		                   (numNrBlocks * sizeof(sctp_gap_ack_block));
-		size_t chunkLen = getLength();
-
-		for (uint16_t i = 0; i < numDups && tsnOffset + sizeof(uint32_t) <= chunkLen; ++i)
-		{
-			uint32_t tsn = be32toh(*reinterpret_cast<const uint32_t*>(
-			    reinterpret_cast<const uint8_t*>(m_Data) + tsnOffset));
-			result.push_back(tsn);
-			tsnOffset += sizeof(uint32_t);
-		}
-
-		return result;
-	}
-
 	// ==================== NR-SACK Chunk Creation ====================
 
 	bool SctpLayer::addNrSackChunk(uint32_t cumulativeTsnAck, uint32_t arwnd,
 	                               const std::vector<sctp_gap_ack_block>& gapBlocks,
 	                               const std::vector<sctp_gap_ack_block>& nrGapBlocks,
-	                               const std::vector<uint32_t>& dupTsns,
-	                               bool allNonRenegable)
+	                               const std::vector<uint32_t>& dupTsns, bool allNonRenegable)
 	{
-		size_t chunkLen = sizeof(sctp_nr_sack_chunk) +
-		                  (gapBlocks.size() * sizeof(sctp_gap_ack_block)) +
-		                  (nrGapBlocks.size() * sizeof(sctp_gap_ack_block)) +
-		                  (dupTsns.size() * sizeof(uint32_t));
+		size_t chunkLen = sizeof(sctp_nr_sack_chunk) + (gapBlocks.size() * sizeof(sctp_gap_ack_block)) +
+		                  (nrGapBlocks.size() * sizeof(sctp_gap_ack_block)) + (dupTsns.size() * sizeof(uint32_t));
 
 		std::vector<uint8_t> chunkData(chunkLen);
 
@@ -3181,10 +3210,8 @@ namespace pcpp
 
 			for (int i = 0; i < 16; ++i)
 			{
-				w[i] = (static_cast<uint32_t>(buffer[i * 4]) << 24) |
-				       (static_cast<uint32_t>(buffer[i * 4 + 1]) << 16) |
-				       (static_cast<uint32_t>(buffer[i * 4 + 2]) << 8) |
-				       static_cast<uint32_t>(buffer[i * 4 + 3]);
+				w[i] = (static_cast<uint32_t>(buffer[i * 4]) << 24) | (static_cast<uint32_t>(buffer[i * 4 + 1]) << 16) |
+				       (static_cast<uint32_t>(buffer[i * 4 + 2]) << 8) | static_cast<uint32_t>(buffer[i * 4 + 3]);
 			}
 
 			for (int i = 16; i < 80; ++i)
@@ -3345,10 +3372,8 @@ namespace pcpp
 
 			for (int i = 0; i < 16; ++i)
 			{
-				w[i] = (static_cast<uint32_t>(buffer[i * 4]) << 24) |
-				       (static_cast<uint32_t>(buffer[i * 4 + 1]) << 16) |
-				       (static_cast<uint32_t>(buffer[i * 4 + 2]) << 8) |
-				       static_cast<uint32_t>(buffer[i * 4 + 3]);
+				w[i] = (static_cast<uint32_t>(buffer[i * 4]) << 24) | (static_cast<uint32_t>(buffer[i * 4 + 1]) << 16) |
+				       (static_cast<uint32_t>(buffer[i * 4 + 2]) << 8) | static_cast<uint32_t>(buffer[i * 4 + 3]);
 			}
 
 			for (int i = 16; i < 64; ++i)
@@ -3448,9 +3473,7 @@ namespace pcpp
 		}
 	}  // anonymous namespace
 
-	bool calculateSctpHmacSha1(const uint8_t* key, size_t keyLen,
-	                           const uint8_t* data, size_t dataLen,
-	                           uint8_t* hmacOut)
+	bool calculateSctpHmacSha1(const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen, uint8_t* hmacOut)
 	{
 		if (key == nullptr || data == nullptr || hmacOut == nullptr)
 			return false;
@@ -3501,8 +3524,7 @@ namespace pcpp
 		return true;
 	}
 
-	bool calculateSctpHmacSha256(const uint8_t* key, size_t keyLen,
-	                             const uint8_t* data, size_t dataLen,
+	bool calculateSctpHmacSha256(const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
 	                             uint8_t* hmacOut)
 	{
 		if (key == nullptr || data == nullptr || hmacOut == nullptr)
@@ -3554,14 +3576,13 @@ namespace pcpp
 		return true;
 	}
 
-	bool verifySctpHmac(uint16_t hmacId, const uint8_t* key, size_t keyLen,
-	                    const uint8_t* data, size_t dataLen,
+	bool verifySctpHmac(uint16_t hmacId, const uint8_t* key, size_t keyLen, const uint8_t* data, size_t dataLen,
 	                    const uint8_t* expectedHmac, size_t expectedHmacLen)
 	{
 		if (key == nullptr || data == nullptr || expectedHmac == nullptr)
 			return false;
 
-		uint8_t computedHmac[SctpHmacSize::SHA256];  // Use largest size
+		uint8_t computedHmac[SctpHmacSize::SHA256] = { 0 };  // Use largest size, zero-initialized
 		size_t hmacSize = 0;
 
 		switch (hmacId)
@@ -3596,8 +3617,8 @@ namespace pcpp
 		return diff == 0;
 	}
 
-	bool computeSctpAuthHmac(const SctpLayer& sctpLayer, const uint8_t* key, size_t keyLen,
-	                         uint8_t* hmacOut, size_t* hmacOutLen)
+	bool computeSctpAuthHmac(const SctpLayer& sctpLayer, const uint8_t* key, size_t keyLen, uint8_t* hmacOut,
+	                         size_t* hmacOutLen)
 	{
 		if (key == nullptr || hmacOut == nullptr || hmacOutLen == nullptr)
 			return false;
@@ -3607,9 +3628,14 @@ namespace pcpp
 		if (authChunk.isNull())
 			return false;
 
+		// Use Auth view to access chunk details
+		auto authView = SctpAuthChunkView::fromChunk(authChunk);
+		if (!authView.isValid())
+			return false;
+
 		// Get AUTH chunk details
-		uint16_t hmacId = authChunk.getAuthHmacId();
-		size_t authHmacLen = authChunk.getAuthHmacLength();
+		uint16_t hmacId = authView.getHmacId();
+		size_t authHmacLen = authView.getHmacLength();
 		uint16_t authChunkLen = authChunk.getLength();
 
 		// Determine expected HMAC size based on algorithm
@@ -3658,20 +3684,15 @@ namespace pcpp
 		size_t paddingLen = authChunkTotalSize - authChunkLen;
 		if (paddingLen > 0 && postHmacOffset < authChunkTotalSize)
 		{
-			// There might be padding bytes
+			// There might be padding bytes - copy the remainder
 			size_t authChunkRemainder = authChunkTotalSize - postHmacOffset;
-			if (authChunkRemainder > 0)
-			{
-				std::memcpy(dataToAuth.data() + postHmacOffset,
-				            authChunkPtr + postHmacOffset, authChunkRemainder);
-			}
+			std::memcpy(dataToAuth.data() + postHmacOffset, authChunkPtr + postHmacOffset, authChunkRemainder);
 		}
 
 		// Copy all chunks after AUTH chunk
 		if (dataAfterAuth > 0)
 		{
-			std::memcpy(dataToAuth.data() + authChunkTotalSize,
-			            authChunkPtr + authChunkTotalSize, dataAfterAuth);
+			std::memcpy(dataToAuth.data() + authChunkTotalSize, authChunkPtr + authChunkTotalSize, dataAfterAuth);
 		}
 
 		// Compute HMAC
@@ -3702,9 +3723,14 @@ namespace pcpp
 		if (authChunk.isNull())
 			return false;
 
+		// Use Auth view to access chunk details
+		auto authView = SctpAuthChunkView::fromChunk(authChunk);
+		if (!authView.isValid())
+			return false;
+
 		// Get the HMAC from the AUTH chunk
-		const uint8_t* storedHmac = authChunk.getAuthHmacData();
-		size_t storedHmacLen = authChunk.getAuthHmacLength();
+		const uint8_t* storedHmac = authView.getHmacData();
+		size_t storedHmacLen = authView.getHmacLength();
 
 		if (storedHmac == nullptr || storedHmacLen == 0)
 			return false;
